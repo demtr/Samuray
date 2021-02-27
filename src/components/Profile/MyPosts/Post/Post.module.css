@@ -1,0 +1,10 @@
+.item {
+    color: white;
+}
+.item img {
+    width: 50px;
+}
+.like {
+    background-color: aqua;
+    color: red;
+}
