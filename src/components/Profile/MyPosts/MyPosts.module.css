@@ -1,6 +1,9 @@
 .item {
     color: white;
 }
-.new {
-    color: red;
+.theBlock {
+    padding: 10px;
+}
+.posts {
+    padding-top: 5px;
 }
