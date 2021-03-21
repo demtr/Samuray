@@ -3,8 +3,8 @@ import OneDialog from "./OneDialog/OneDialog";
 import Message from "./Message/Message";
 
 const Dialogs = (p) => {
-    const dlgDataComp = p.dlg.map(dlg => <OneDialog name={dlg.name} id={dlg.id}/>);
-    const msgDataComp = p.msg.map(m => <Message message={m.message}/>);
+    const dlgDataComp = p.state.dialogs.map(dlg => <OneDialog name={dlg.name} id={dlg.id}/>);
+    const msgDataComp = p.state.messages.map(m => <Message message={m.message}/>);
 
     return (
         <div className={c.dialogs}>

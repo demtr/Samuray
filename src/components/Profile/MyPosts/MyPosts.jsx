@@ -2,6 +2,7 @@ import c from "./MyPosts.module.css";
 import Post from "./Post/Post";
 
 const MyPosts = (p) => {
+    debugger;
     const myPostsComp = (p.postList).map(el => <Post message={el.message} lcount={el.lcount}/>);
 
     return (
