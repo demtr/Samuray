@@ -13,6 +13,8 @@ const Dialogs = (p) => {
             </div>
             <div className={c.messages}>
                 {msgDataComp}
+                <textarea/>
+                <button>Отправить</button>
             </div>
         </div>
     );
