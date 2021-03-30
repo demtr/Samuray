@@ -7,7 +7,7 @@ debugger;
     return (
         <div>
             <img src={pic1} alt="pic"/>
-            <MyPosts postList={p.state.anyPosts}/>
+            <MyPosts postList={p.state.anyPosts} addPost={p.addPost}/>
         </div>
     );
 }

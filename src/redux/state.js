@@ -23,4 +23,9 @@ let state = {
     sideBar: {}
 }
 
+export let addPost = (msg) => {
+    state.profileBlock.anyPosts.push({id:5, message: msg, lcount: 0});
+    // debugger;
+}
+
 export default state;
