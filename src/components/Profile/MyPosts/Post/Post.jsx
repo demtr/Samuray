@@ -1,3 +1,5 @@
+// Определение компонеты Post (одно сообщение в профиле пользователя(на стене?))
+
 import c from "./Post.module.css";
 import ava from "../../../../img/ava.png"
 import like from "../../../../img/like.jfif"

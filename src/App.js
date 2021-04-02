@@ -18,7 +18,9 @@ function App(p) {
                 <Navbar/>
                 <div className="App-container-content">
                     <Route path="/dialogs" render={() => <Dialogs state={p.state.dialogBlock}/>}/>
-                    <Route path="/profile" render={() => <Profile state={p.state.profileBlock} addPost={p.addPost}/>}/>
+                    <Route path="/profile" render={() => <Profile state={p.state.profileBlock}
+                                                                  addPost={p.addPost}
+                                                                  changeMsg={p.changeMsg}/>}/>
                     <Route path="/news" component={News}/>
                     <Route path="/music" component={Music}/>
                     <Route path="/settings" component={Settings}/>

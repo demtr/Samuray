@@ -1,3 +1,4 @@
+// Определение компонеты Music
 
 const Music = () => {
     return (
