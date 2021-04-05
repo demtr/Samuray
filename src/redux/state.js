@@ -1,6 +1,6 @@
-import {renderFullTree} from "../render.js";
 
-let state = {
+
+export let store = {
     profileBlock: {
         anyPosts: [
             {id: 1, message: "Hello, how are you?", lcount: 12},
@@ -23,33 +23,42 @@ let state = {
             {id: 3, message: "Yo!"},
         ]
     },
-    sideBar: {}
-}
+    sideBar: {},
+    renderFullTree: () => {},
 
-// Ф-ция для добавления сообщения в массив данных на стороне BLL.
+// Метод для добавления сообщения в массив данных на стороне BLL.
 // Экспортируем имя ф-ции не в дефолтном виде, здесь экспортное имя важно!
-export let addPost = () => {
-// debugger;
-    // в ф-ции находим максимальный id поста
-    let getMaxId = () => {
-        if (state.profileBlock.anyPosts.length === 0) return 0;
-        let max=state.profileBlock.anyPosts[0]?.id; // существуют элементы в массиве?
-        for (let i=1; i<state.profileBlock.anyPosts.length; i++)
-            if (state.profileBlock.anyPosts[i].id > max)
-                max = state.profileBlock.anyPosts[i].id;
-        return max;
-    };
+// Текст сообщения через параметры не передаём, т.к. оно уже передано в State ф-ей changeMsg(),
+// т.е. мы берем его из state.profileBlock.newMsgText
+    addPost: function() {
 
-    let nextId = getMaxId() + 1;
+        // В этой функции находим максимальный id поста
+        let getMaxId = () => {
+            if (store.profileBlock.anyPosts.length === 0) return 0;
+            let max=store.profileBlock.anyPosts[0]?.id; // существуют элементы в массиве?
+            store.profileBlock.anyPosts.forEach(item => {
+                if (item.id > max)
+                    max = item.id;
+            });
+            return max??0;
+        };
 
-    state.profileBlock.anyPosts.push({id: nextId, message: state.profileBlock.newMsgText, lcount: 0});
-    state.profileBlock.newMsgText = "";
-    renderFullTree(state);
-};
+        let nextId = getMaxId() + 1;
 
-export let changeMsg =(msg) => {
-    state.profileBlock.newMsgText = msg;
-    renderFullTree(state);
-};
+        store.profileBlock.anyPosts.push({id: nextId, message: store.profileBlock.newMsgText, lcount: 0});
+        store.profileBlock.newMsgText = ""; // обнуляем поле сообщения после добавления его текста в store
+        store.renderFullTree(store); // перерисовываем весь интерфейс
+    },
 
-export default  state; // по дефолту можем указывать любое имя, это не важно при импорте!
+    // Метод заносит сообщение в store
+    changeMsg: function(msg) {
+        store.profileBlock.newMsgText = msg;
+        store.renderFullTree(store);
+    },
+
+    // C помощью этого метода передаём ф-ию renderFullTree из index.js
+    delegate: (observer) => {
+        store.renderFullTree = observer;
+    }
+
+}
