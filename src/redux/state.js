@@ -1,3 +1,6 @@
+const ADD_POST = "ADD-POST";
+const CHANGE_MESSAGE = "CHANGE-MESSAGE";
+
 let store = {
     _state: {
         profileBlock: {
@@ -73,6 +76,10 @@ let store = {
         }
     },
 
-}
+};
+
+export const addPostActionCreator = () => ({type:ADD_POST});
+
+export const changeMessageActionCreator = (text) => ({type:CHANGE_MESSAGE, msgText:text});
 
 export default store;
