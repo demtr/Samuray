@@ -11,13 +11,15 @@ const MyPosts = (p) => {
     let newTextRef = React.createRef();
 
     // Использование проброшенной функции для добавления сообщения в массив сообщений на стороне бизнес логики.
-    // Для получения текста сообщения используем созданную ссылку.
+    // Получения текста сообщения происходит на стороне BLL.
     let newPost = () => {
-        p.addPost();
+        p.dispatch({type:"ADD-POST"});
     };
 
+    // При любом изменении текста меняем state
+    // Для получения текста сообщения используем созданную ссылку.
     let whenPostChanged = () => {
-        p.changeMsg(newTextRef.current.value);
+        p.dispatch({type:"CHANGE-MESSAGE", msgText:newTextRef.current.value});
     };
 
     return (

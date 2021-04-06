@@ -3,11 +3,10 @@ import c from "./Profile.module.css";
 import MyPosts from "./MyPosts/MyPosts";
 
 const Profile = (p) => {
-// debugger;
     return (
         <div>
             <img src={pic1} alt="pic"/>
-            <MyPosts postList={p.state.anyPosts} msg={p.state.newMsgText} addPost={p.addPost} changeMsg={p.changeMsg}/>
+            <MyPosts postList={p.state.anyPosts} msg={p.state.newMsgText} dispatch={p.dispatch}/>
         </div>
     );
 }
