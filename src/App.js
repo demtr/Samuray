@@ -17,10 +17,9 @@ function App(p) {
                 {/*Версия React:{vr};*/}
                 <Navbar/>
                 <div className="App-container-content">
-                    <Route path="/dialogs" render={() => <Dialogs state={p.store.dialogBlock}/>}/>
-                    <Route path="/profile" render={() => <Profile state={p.store.profileBlock}
-                                                                  addPost={p.store.addPost}
-                                                                  changeMsg={p.store.changeMsg}/>}/>
+                    <Route path="/dialogs" render={() => <Dialogs state={p.state.dialogBlock}/>}/>
+                    <Route path="/profile" render={() => <Profile state={p.state.profileBlock}
+                                                                  dispatch={p.dispatch}/>}/>
                     <Route path="/news" component={News}/>
                     <Route path="/music" component={Music}/>
                     <Route path="/settings" component={Settings}/>
