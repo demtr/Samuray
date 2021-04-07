@@ -1,5 +1,7 @@
 const ADD_POST = "ADD-POST";
 const CHANGE_MESSAGE = "CHANGE-MESSAGE";
+const ADD_MESSAGE_TO_DIALOG = "ADD-MESSAGE-TO-DIALOG";
+const CHANGE_DIALOG_MESSAGE = "CHANGE-DIALOG-MESSAGE";
 
 let store = {
     _state: {
@@ -23,7 +25,8 @@ let store = {
                 {id: 1, message: "Hello!"},
                 {id: 2, message: "Hey you!"},
                 {id: 3, message: "Yo!"},
-            ]
+            ],
+            newMsgText: "Type text here"
         },
         sideBar: {},
     },
@@ -41,7 +44,7 @@ let store = {
 
     // Вместо нескольких методов ввели один!
     dispatch(action) {
-        if (action.type === "ADD-POST") {
+        if (action.type === ADD_POST) {
 // Метод для добавления сообщения в массив данных на стороне BLL.
 // Текст сообщения через параметры не передаём, т.к. оно уже передано в State ф-ей changeMsg(),
 // т.е. мы берем его из state.profileBlock.newMsgText
@@ -68,10 +71,37 @@ let store = {
             this._state.profileBlock.newMsgText = ""; // обнуляем поле сообщения после добавления его текста в store
             this._callSubscriber(this._state); // перерисовываем весь интерфейс
 
-        } else if (action.type === "CHANGE-MESSAGE") {
+        } else if (action.type === CHANGE_MESSAGE) {
             // Метод заносит обновлённое сообщение в store при любом минимальном изменении
                 this._state.profileBlock.newMsgText = action.msgText;
                 this._callSubscriber(this._state);
+
+        } else if (action.type === ADD_MESSAGE_TO_DIALOG) {
+            // В этой функции находим максимальный id поста
+            let getMaxId = () => {
+                if (this._state.dialogBlock.messages.length === 0) return 0;
+                let max = this._state.dialogBlock.messages[0]?.id; // существуют элементы в массиве?
+                this._state.dialogBlock.messages.forEach(item => {
+                    if (item.id > max)
+                        max = item.id;
+                });
+                return max ?? 0;
+            };
+
+            let nextId = getMaxId() + 1;
+
+            this._state.dialogBlock.messages.push(
+                {
+                    id: nextId,
+                    message: this._state.dialogBlock.newMsgText
+                });
+            this._state.dialogBlock.newMsgText = ""; // обнуляем поле сообщения после добавления его текста в store
+            this._callSubscriber(this._state); // перерисовываем весь интерфейс
+
+        } else if (action.type === CHANGE_DIALOG_MESSAGE) {
+            // Метод заносит обновлённое сообщение в store при любом минимальном изменении
+            this._state.dialogBlock.newMsgText = action.msgText;
+            this._callSubscriber(this._state);
 
         }
     },
@@ -81,5 +111,9 @@ let store = {
 export const addPostActionCreator = () => ({type:ADD_POST});
 
 export const changeMessageActionCreator = (text) => ({type:CHANGE_MESSAGE, msgText:text});
+
+export const addMessageToDialogActionCreator = () => ({type:ADD_MESSAGE_TO_DIALOG});
+
+export const changeDialogMessageActionCreator = (text) => ({type:CHANGE_DIALOG_MESSAGE, msgText:text});
 
 export default store;
