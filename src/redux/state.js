@@ -26,7 +26,7 @@ let store = {
                 {id: 2, message: "Hey you!"},
                 {id: 3, message: "Yo!"},
             ],
-            newMsgText: "Type text here"
+            newMsgText: ""
         },
         sideBar: {},
     },

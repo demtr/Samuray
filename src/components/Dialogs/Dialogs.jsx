@@ -17,7 +17,7 @@ const Dialogs = (p) => {
             <div className={c.messages}>
                 {msgDataComp}
                 <div>
-                    <textarea placeholder="Enter your text" value={p.newMsgText} onChange={onMessageChange}/>
+                    <textarea placeholder="Enter your text" value={p.state.newMsgText} onChange={onMessageChange}/>
                 </div>
                 <div>
                     <button onClick={onAddMessage}>Отправить</button>
