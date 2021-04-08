@@ -1,7 +1,7 @@
 import c from "./MyPosts.module.css";
 import Post from "./Post/Post";
 import React from "react";
-import {addPostActionCreator, changeMessageActionCreator} from "../../../redux/state";
+import {addPostActionCreator, changeMessageActionCreator} from "../../../redux/profileBlockReducer";
 
 const MyPosts = (p) => {
     // Здесь функция map преобразует массив данных в массив компонентов, содержащих этих данных,

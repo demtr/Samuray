@@ -1,7 +1,7 @@
 import c from "./Dialogs.module.css";
 import OneDialog from "./OneDialog/OneDialog";
 import Message from "./Message/Message";
-import {addMessageToDialogActionCreator, changeDialogMessageActionCreator} from "../../redux/state";
+import {addMessageToDialogActionCreator, changeDialogMessageActionCreator} from "../../redux/dialogBlockReducer";
 
 const Dialogs = (p) => {
     const dlgDataComp = p.state.dialogs.map(dlg => <OneDialog key={dlg.id} name={dlg.name} id={dlg.id}/>);
