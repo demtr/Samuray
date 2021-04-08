@@ -4,8 +4,8 @@ import Message from "./Message/Message";
 import {addMessageToDialogActionCreator, changeDialogMessageActionCreator} from "../../redux/state";
 
 const Dialogs = (p) => {
-    const dlgDataComp = p.state.dialogs.map(dlg => <OneDialog name={dlg.name} id={dlg.id}/>);
-    const msgDataComp = p.state.messages.map(m => <Message message={m.message}/>);
+    const dlgDataComp = p.state.dialogs.map(dlg => <OneDialog key={dlg.id} name={dlg.name} id={dlg.id}/>);
+    const msgDataComp = p.state.messages.map(m => <Message key={m.id} message={m.message}/>);
     const onAddMessage = () => {p.dispatch(addMessageToDialogActionCreator());};
     const onMessageChange = (e) => {p.dispatch(changeDialogMessageActionCreator(e.target.value));};
 
