@@ -1,3 +1,7 @@
+import dialogBlockReducer from "./dialogBlockReducer";
+import sideBarReducer from "./sideBarReducer";
+import profileBlockReducer from "./profileBlockReducer";
+
 let store = {
     _state: {
         profileBlock: {
@@ -20,7 +24,8 @@ let store = {
                 {id: 1, message: "Hello!"},
                 {id: 2, message: "Hey you!"},
                 {id: 3, message: "Yo!"},
-            ]
+            ],
+            newMsgText: ""
         },
         sideBar: {},
     },
@@ -38,41 +43,12 @@ let store = {
 
     // Вместо нескольких методов ввели один!
     dispatch(action) {
-        if (action.type === "ADD-POST") {
-// Метод для добавления сообщения в массив данных на стороне BLL.
-// Текст сообщения через параметры не передаём, т.к. оно уже передано в State ф-ей changeMsg(),
-// т.е. мы берем его из state.profileBlock.newMsgText
-
-            // В этой функции находим максимальный id поста
-            let getMaxId = () => {
-                if (this._state.profileBlock.anyPosts.length === 0) return 0;
-                let max = this._state.profileBlock.anyPosts[0]?.id; // существуют элементы в массиве?
-                this._state.profileBlock.anyPosts.forEach(item => {
-                    if (item.id > max)
-                        max = item.id;
-                });
-                return max ?? 0;
-            };
-
-            let nextId = getMaxId() + 1;
-
-            this._state.profileBlock.anyPosts.push(
-                {
-                    id: nextId,
-                    message: this._state.profileBlock.newMsgText,
-                    lcount: 0
-                });
-            this._state.profileBlock.newMsgText = ""; // обнуляем поле сообщения после добавления его текста в store
-            this._callSubscriber(this._state); // перерисовываем весь интерфейс
-
-        } else if (action.type === "CHANGE-MESSAGE") {
-            // Метод заносит обновлённое сообщение в store при любом минимальном изменении
-                this._state.profileBlock.newMsgText = action.msgText;
-                this._callSubscriber(this._state);
-
-        }
+        this._state.profileBlock = profileBlockReducer(action, this._state.profileBlock);
+        this._state.dialogBlock = dialogBlockReducer(action, this._state.dialogBlock);
+        this._state.sideBar = sideBarReducer(action, this._state.sideBar);
+        this._callSubscriber(this._state); // перерисовываем весь интерфейс
     },
 
-}
+};
 
 export default store;

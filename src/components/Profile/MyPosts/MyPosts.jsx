@@ -1,6 +1,7 @@
 import c from "./MyPosts.module.css";
 import Post from "./Post/Post";
 import React from "react";
+import {addPostActionCreator, changeMessageActionCreator} from "../../../redux/profileBlockReducer";
 
 const MyPosts = (p) => {
     // Здесь функция map преобразует массив данных в массив компонентов, содержащих этих данных,
@@ -13,13 +14,13 @@ const MyPosts = (p) => {
     // Использование проброшенной функции для добавления сообщения в массив сообщений на стороне бизнес логики.
     // Получения текста сообщения происходит на стороне BLL.
     let newPost = () => {
-        p.dispatch({type:"ADD-POST"});
+        p.dispatch(addPostActionCreator());
     };
 
     // При любом изменении текста меняем state
     // Для получения текста сообщения используем созданную ссылку.
     let whenPostChanged = () => {
-        p.dispatch({type:"CHANGE-MESSAGE", msgText:newTextRef.current.value});
+        p.dispatch(changeMessageActionCreator(newTextRef.current.value));
     };
 
     return (
