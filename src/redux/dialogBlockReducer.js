@@ -1,8 +1,23 @@
 const ADD_MESSAGE_TO_DIALOG = "ADD-MESSAGE-TO-DIALOG";
 const CHANGE_DIALOG_MESSAGE = "CHANGE-DIALOG-MESSAGE";
+let initialState = {
+    dialogs: [
+        {id: 1, name: "Ivan"},
+        {id: 2, name: "Zorro"},
+        {id: 3, name: "Javier"},
+        {id: 4, name: "Mike"},
+        {id: 5, name: "Ramirez"},
+    ],
+    messages: [
+        {id: 1, message: "Hello!"},
+        {id: 2, message: "Hey you!"},
+        {id: 3, message: "Yo!"},
+    ],
+    newMsgText: ""
+};
 
 // В reducer передаются action и state. state, относящийся к данной ветке
-const dialogBlockReducer = (action, state) => {
+const dialogBlockReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE_TO_DIALOG:
             // В этой функции находим максимальный id сообщения

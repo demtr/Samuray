@@ -1,8 +1,16 @@
 const ADD_POST = "ADD-POST";
 const CHANGE_MESSAGE = "CHANGE-MESSAGE";
+let initialState = {
+    anyPosts: [
+        {id: 1, message: "Hello, how are you?", lcount: 12},
+        {id: 2, message: "It's my first post!", lcount: 45},
+        {id: 3, message: "It works correct!", lcount: 19},
+    ],
+    newMsgText: "Type text here"
+};
 
 // В reducer передаются action и state. state, относящийся к данной ветке
-const profileBlockReducer = (action, state) => {
+const profileBlockReducer = (state=initialState, action) => {
     switch (action.type) {
         case ADD_POST:
             // Метод для добавления сообщения в массив данных на стороне BLL.
