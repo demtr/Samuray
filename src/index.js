@@ -6,23 +6,19 @@ import App from './App';
 import {BrowserRouter} from "react-router-dom";
 import store from "./redux/redux-store";
 
-export let renderFullTree = (state) => {
+export let renderFullTree = () => {
     ReactDOM.render(
         <BrowserRouter>
-           <App state={state}
-                /*Подвох с контекстом вызова! Если передать просто: store.addPost, то this внутри него будет зависеть от
-                контекста, то есть от той функции, где непосредственно будет происходить вызов.
-                Для преодоления этого явления используем bind() */
-                dispatch={store.dispatch.bind(store)}/>
+           <App store={store} />
         </BrowserRouter>,
         document.getElementById('root')
     );
 }
 
-renderFullTree(store.getState());
+renderFullTree();
 
 // redux не передаёт в listener данные state
-store.subscribe(() => {renderFullTree(store.getState())});
+store.subscribe(renderFullTree);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
