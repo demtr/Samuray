@@ -9,7 +9,7 @@ import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 
-function App(p) {
+function App() {
     // const vr = React.version;
     return (
             <div className="App-container">
@@ -17,8 +17,8 @@ function App(p) {
                 {/*Версия React:{vr};*/}
                 <Navbar/>
                 <div className="App-container-content">
-                    <Route path="/dialogs" render={() => <DialogsContainer store={p.store}/>}/>
-                    <Route path="/profile" render={() => <Profile store={p.store}/>}/>
+                    <Route path="/dialogs" render={() => <DialogsContainer />}/>
+                    <Route path="/profile" render={() => <Profile />}/>
                     <Route path="/news" component={News}/>
                     <Route path="/music" component={Music}/>
                     <Route path="/settings" component={Settings}/>

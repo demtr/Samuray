@@ -5,11 +5,14 @@ import App from './App';
 // Недефолтное экспортированное имя импортируем в фигурных скобках
 import {BrowserRouter} from "react-router-dom";
 import store from "./redux/redux-store";
+import {Provider} from "./StoreContext";
 
 export let renderFullTree = () => {
     ReactDOM.render(
         <BrowserRouter>
-           <App store={store} />
+            <Provider store={store}>
+                <App />
+            </Provider>
         </BrowserRouter>,
         document.getElementById('root')
     );
