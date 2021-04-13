@@ -1,33 +1,25 @@
-import React from "react";
 import {addPostActionCreator, changeMessageActionCreator} from "../../../redux/profileBlockReducer";
 import MyPosts from "./MyPosts";
-import StoreContext from "../../../StoreContext";
+import {connect} from "react-redux";
 
-// Контейнерная компонента. Замыкает на себе общение с store
-const MyPostsContainer = () => {
-
-    return (
-        <StoreContext.Consumer>
-            {store => {
-                // Использование проброшенной функции для добавления сообщения в массив сообщений на стороне бизнес логики.
-                // Получения текста сообщения происходит на стороне BLL.
-                // В функциональную компонету передаём только локальные callback - и
-                let newPost = () => {
-                    store.dispatch(addPostActionCreator());
-                };
-
-                // При любом изменении текста меняем state
-                // Для получения текста сообщения используем созданную ссылку.
-                let whenPostChanged = (text) => {
-                    store.dispatch(changeMessageActionCreator(text));
-                };
-
-                return <MyPosts state={store.getState().profileBlock}
-                                newPost={newPost} whenPostChanged={whenPostChanged}/>;
-            }
-            }
-        </StoreContext.Consumer>
-    );
+// ф-ция возвращает объект данных
+let mapStateToProps = (state) => {
+    return {
+        state: state.profileBlock
+    }
 }
+
+// ф-ция возвращает объект коллбеков
+let mapDispatchToProps = (dispatch) => {
+    return {
+        newPost: () => {dispatch(addPostActionCreator());},
+        whenPostChanged: (text) => {dispatch(changeMessageActionCreator(text));}
+    }
+}
+
+// connect созадёт контейнерную компоненту MyPostsContainer. Она замыкает на себе
+// общение со store и передаёт данные и колбеки в презентационную компоненту MyPosts.
+// store передаётся по технологии context через компоненту Provider в файле index.js
+const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts);
 
 export default MyPostsContainer;

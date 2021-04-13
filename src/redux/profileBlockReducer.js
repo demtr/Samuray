@@ -29,19 +29,22 @@ const profileBlockReducer = (state=initialState, action) => {
 
             let nextId = getMaxId() + 1;
 
-            state.anyPosts.push(
+            let newState = {...state}; // копия для чистой функции, чтобы не изменялись передаваемые параметры
+            newState.anyPosts = [...state.anyPosts];
+            newState.anyPosts.push(
                 {
                     id: nextId,
                     message: state.newMsgText,
                     lcount: 0
                 });
-            state.newMsgText = ""; // обнуляем поле сообщения после добавления его текста в store
-            break;
+            newState.newMsgText = ""; // обнуляем поле сообщения после добавления его текста в store
+            return newState;
 
         case CHANGE_MESSAGE:
             // Метод заносит обновлённое сообщение в store при любом минимальном изменении
-            state.newMsgText = action.msgText;
-            break;
+            let stateCopy = {...state};
+            stateCopy.newMsgText = action.msgText;
+            return stateCopy;
 
         default:
             break;

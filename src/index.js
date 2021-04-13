@@ -5,23 +5,17 @@ import App from './App';
 // Недефолтное экспортированное имя импортируем в фигурных скобках
 import {BrowserRouter} from "react-router-dom";
 import store from "./redux/redux-store";
-import {Provider} from "./StoreContext";
+import {Provider} from "react-redux";
 
-export let renderFullTree = () => {
-    ReactDOM.render(
-        <BrowserRouter>
-            <Provider store={store}>
-                <App />
-            </Provider>
-        </BrowserRouter>,
-        document.getElementById('root')
-    );
-}
+ReactDOM.render(
+    <BrowserRouter>
+        <Provider store={store}>
+            <App/>
+        </Provider>
+    </BrowserRouter>,
+    document.getElementById('root')
+);
 
-renderFullTree();
-
-// redux не передаёт в listener данные state
-store.subscribe(renderFullTree);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
