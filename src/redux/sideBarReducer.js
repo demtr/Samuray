@@ -1,6 +1,7 @@
+let initialState = {};
 
 // В reducer передаются action и state. state, относящийся к данной ветке
-const sideBarReducer = (action, state) => {
+const sideBarReducer = (state = initialState, action) => {
     return state;
 };
 

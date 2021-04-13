@@ -1,13 +1,12 @@
 import c from "./Dialogs.module.css";
 import OneDialog from "./OneDialog/OneDialog";
 import Message from "./Message/Message";
-import {addMessageToDialogActionCreator, changeDialogMessageActionCreator} from "../../redux/dialogBlockReducer";
 
 const Dialogs = (p) => {
     const dlgDataComp = p.state.dialogs.map(dlg => <OneDialog key={dlg.id} name={dlg.name} id={dlg.id}/>);
     const msgDataComp = p.state.messages.map(m => <Message key={m.id} message={m.message}/>);
-    const onAddMessage = () => {p.dispatch(addMessageToDialogActionCreator());};
-    const onMessageChange = (e) => {p.dispatch(changeDialogMessageActionCreator(e.target.value));};
+    const onAddMessage = () => {p.onAddMessage();};
+    const onMessageChange = (e) => {p.onMessageChange(e.target.value);};
 
     return (
         <div className={c.dialogs}>
