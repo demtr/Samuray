@@ -18,7 +18,6 @@ let initialState = {
 
 // В reducer передаются action и state. state, относящийся к данной ветке
 const dialogBlockReducer = (state = initialState, action) => {
-    let newState;
     switch (action.type) {
         case ADD_MESSAGE_TO_DIALOG:
             // В этой функции находим максимальный id сообщения
@@ -32,21 +31,19 @@ const dialogBlockReducer = (state = initialState, action) => {
             };
 
             let nextId = getMaxId() + 1;
-            newState = {...state};
-            newState.messages = [...state.messages];
-            newState.messages.push(
-                {
-                    id: nextId,
-                    message: state.newMsgText
-                });
-            newState.newMsgText = ""; // обнуляем поле сообщения после добавления его текста в store
-            return newState;
+            let newMsg = {
+                id: nextId,
+                message: state.newMsgText
+            };
+            return {
+                ...state,
+                messages: [...state.messages, newMsg],
+                newMsgText: "" // обнуляем поле сообщения после добавления его текста в store
+            };
 
         case CHANGE_DIALOG_MESSAGE:
             // Метод заносит обновлённое сообщение в store при любом минимальном изменении
-            newState = {...state};
-            newState.newMsgText = action.msgText;
-            return newState;
+            return {...state, newMsgText: action.msgText};
 
         default:
             break;
