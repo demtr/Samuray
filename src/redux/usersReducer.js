@@ -15,7 +15,7 @@ const usersReducer = (state=initialState, action) => {
         case GET_USERS:
             return {
                 ...state,  // копия для чистой функции, чтобы не изменялись передаваемые параметры
-                users: [...state.users, ...action.users], // добавили элемент к скопированному массиву
+                users: [/*...state.users,*/ ...action.users], // полностью заменяем массив контактов
             };
 
         case FOLLOW: // добавить в друзья
