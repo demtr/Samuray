@@ -2,16 +2,42 @@ import React from "react";
 import ava from "../../img/ava.png"
 import c from "./Users.module.css"
 import * as axios from "axios"
+import classNames from "classnames"
 
 class Users extends React.Component {
-    // Контструктор вызывается только 1 раз при создании компоненты
-    constructor(props) {
-        super(props);
-        axios.get("https://social-network.samuraijs.com/api/1.0/users")
-            .then((response)=>{props.getUsers(response.data.items);});
+    // Метод componentDidMount вызывается только 1 раз после отрисовки компоненты
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+            .then((response)=>{
+                this.props.getUsers(response.data.items);
+                this.props.setNumberOfUsers(response.data.totalCount);
+            });
     }
-    render() {
 
+    goToPage = (page) => {
+        this.props.setPageNumber(page);
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`)
+            .then((response)=>{
+                this.props.getUsers(response.data.items);
+                this.props.setNumberOfUsers(response.data.totalCount);
+            });
+    }
+
+    render() {
+        const pages = () => {
+            let totPages= Math.ceil(this.props.totUsers/this.props.pageSize);
+            let pages=[];
+            for (let p=1; p<=totPages; p++) {
+                pages.push(p);
+            }
+            let clLink = (p) => {
+                let cn = classNames([c.pageLink]);
+                if (p === this.props.currentPage) cn = classNames([c.actLink]);
+                return cn;
+            };
+            return pages.map(p => <span onClick={()=>{this.goToPage(p)}}
+                                      className={clLink(p)}>{p} </span>);
+        };
         const ulist = this.props.users.map(el => <div key={el.id}>
             <table>
                 <tr>
@@ -33,7 +59,7 @@ class Users extends React.Component {
                 </tr>
             </table>
         </div>);
-        return <div>{ulist}</div>
+        return <div>{pages()}{ulist}</div>
     }
 }
 
