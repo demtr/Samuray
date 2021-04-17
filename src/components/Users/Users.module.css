@@ -1,0 +1,19 @@
+.ava {
+    width: 50%;
+}
+
+.name {
+    color: magenta;
+    font-weight: bold;
+}
+
+.actLink {
+    font-weight: bold;
+    font-size: large;
+    color: red;
+}
+
+.pageLink {
+    font-size: x-small;
+    cursor: pointer;
+}
