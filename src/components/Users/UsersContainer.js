@@ -62,15 +62,11 @@ let mapStateToProps = (state) => {
     };
 }
 
-let mapDispatchToProps = (dispatch) => {
-    return {
-        onFollow: (userId) => {dispatch(followAC(userId))},
-        onUnFollow: (userId) => {dispatch(unfollowAC(userId))},
-        getUsers: (users) => {dispatch(getUsersAC(users))},
-        setNumberOfUsers: (number) => {dispatch(setNumberOfUsersAC(number))},
-        setPageNumber: (number) => {dispatch(setPageNumberAC(number))},
-        toggleFetching: (fetch) => {dispatch(toggleFetchingAC(fetch))}
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, {
+    onFollow: followAC,
+    onUnFollow: unfollowAC,
+    getUsers: getUsersAC,
+    setNumberOfUsers: setNumberOfUsersAC,
+    setPageNumber: setPageNumberAC,
+    toggleFetching: toggleFetchingAC
+})(UsersContainer);
