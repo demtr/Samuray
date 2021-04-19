@@ -3,6 +3,7 @@ const UNFOLLOW = "UNFOLLOW";
 const GET_USERS = "GET_USERS";
 const SET_PAGE_NUMBER = "SET_PAGE_NUMBER";
 const SET_NUMBER_OF_USERS = "SET_NUMBER_OF_USERS";
+const SET_FETCHING = "SET_FETCHING";
 
 let initialState = {
     users: [
@@ -13,7 +14,8 @@ let initialState = {
     pageSize: 75,
     totUsers: undefined,
     currentPage: 1,
-    numberOfPages: undefined
+    numberOfPages: undefined,
+    isFetching: false
 };
 
 // В reducer передаются action и state. state, относящийся к данной ветке
@@ -55,6 +57,12 @@ const usersReducer = (state=initialState, action) => {
                 currentPage: action.pageNumber,
             };
 
+        case SET_FETCHING:
+            return {
+                ...state,  // копия для чистой функции, чтобы не изменялись передаваемые параметры
+                isFetching: action.isFetching,
+            };
+
         default:
             break;
     }
@@ -66,5 +74,6 @@ export const unfollowAC = (userId) => ({type:UNFOLLOW, userId});
 export const getUsersAC = (users) => ({type:GET_USERS, users});
 export const setPageNumberAC = (page) => ({type:SET_PAGE_NUMBER, pageNumber:page});
 export const setNumberOfUsersAC = (allUsers) => ({type:SET_NUMBER_OF_USERS, totUsers:allUsers});
+export const toggleFetchingAC = (fetch) => ({type:SET_FETCHING, isFetching:fetch});
 
 export default usersReducer;
