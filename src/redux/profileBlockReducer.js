@@ -1,12 +1,14 @@
 const ADD_POST = "ADD-POST";
 const CHANGE_MESSAGE = "CHANGE-MESSAGE";
+const SET_USER_PROFILE = "SET_USER_PROFILE";
 let initialState = {
     anyPosts: [
         {id: 1, message: "Hello, how are you?", lcount: 12},
         {id: 2, message: "It's my first post!", lcount: 45},
         {id: 3, message: "It works correct!", lcount: 19},
     ],
-    newMsgText: "Type text here"
+    newMsgText: "Type text here",
+    profile: null
 };
 
 // В reducer передаются action и state. state, относящийся к данной ветке
@@ -46,6 +48,8 @@ const profileBlockReducer = (state=initialState, action) => {
                 ...state,
                 newMsgText: action.msgText
             };
+        case SET_USER_PROFILE:
+            return {...state, profile: action.profile};
 
         default:
             break;
@@ -55,5 +59,6 @@ const profileBlockReducer = (state=initialState, action) => {
 
 export const addPostActionCreator = () => ({type:ADD_POST});
 export const changeMessageActionCreator = (text) => ({type:CHANGE_MESSAGE, msgText:text});
+export const setUserProfile = (profile) => ({type:SET_USER_PROFILE, profile});
 
 export default profileBlockReducer;

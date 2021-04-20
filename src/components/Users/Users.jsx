@@ -2,6 +2,7 @@ import React from "react";
 import ava from "../../img/ava.png"
 import c from "./Users.module.css"
 import classNames from "classnames"
+import {NavLink} from "react-router-dom";
 
 let Users = (props) => {
 
@@ -25,7 +26,8 @@ let Users = (props) => {
         <table>
             <tr>
                 <td width="100px">
-                    <div><img src={el.photos.small ?? ava} alt="avatar" className={c.ava}/></div>
+                    <div><NavLink to={"profile/"+el.id}><img src={el.photos.small ?? ava} alt="avatar"
+                                                    className={c.ava}/></NavLink></div>
                     <div>{el.followed ?
                         <button onClick={(id) => {
                             props.onUnFollow(el.id);
