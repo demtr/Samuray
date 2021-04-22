@@ -3,5 +3,13 @@
    background-color: burlywood;
 }
 .header img {
-   width: 40px;
+   width: 60px;
+}
+.login {
+   float: right;
+   color: magenta;
+   margin-right: 10px;
+}
+.login a {
+   color: white;
 }
