@@ -1,11 +1,10 @@
-import pic1 from "../../img/pexels-photo-248797.jpeg";
-import c from "./Profile.module.css";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import ProfileInfo from "./ProfileInfo";
 
-const Profile = () => {
+const Profile = (props) => {
     return (
         <div>
-            <img src={pic1} alt="pic"/>
+            <ProfileInfo profile={props.profile}/>
             <MyPostsContainer />
         </div>
     );
