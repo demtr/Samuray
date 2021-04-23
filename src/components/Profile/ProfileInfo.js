@@ -1,4 +1,4 @@
-import pic1 from "../../img/pexels-photo-248797.jpeg";
+import land from "../../img/landscape.webp";
 import c from "./Profile.module.css";
 import ava from "../../img/ava.png"
 import Preloader from "../common/Preloader";
@@ -8,7 +8,7 @@ const ProfileInfo = (props) => {
         return <Preloader/>
     }
     return <>
-        <img src={pic1} alt="Profile wallpaper"/>
+        <img src={land} alt="Profile wallpaper" className={c.land}/>
         <div><h2>{props.profile.fullName}</h2></div>
         <div><font color="red" size="+2">{props.profile.aboutMe}</font></div>
         <div><img src={props.profile.photos.large || ava} alt="Contact picture"/></div>

@@ -9,30 +9,28 @@ import {
     unfollowAC
 } from "../../redux/usersReducer";
 import React from "react";
-import * as axios from "axios";
 import Preloader from "../common/Preloader";
+import {userApi} from "../../api/api";
 
 class UsersContainer extends React.Component {
     // Метод componentDidMount вызывается только 1 раз после отрисовки компоненты
     componentDidMount() {
         this.props.toggleFetching(true);
-       axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-        // axios.get(`http://localhost/users2.php`)
-            .then((response)=>{
-                this.props.toggleFetching(false);
-                this.props.getUsers(response.data.items);
-                this.props.setNumberOfUsers(response.data.totalCount);
-            });
+        userApi.getUsers(this.props.currentPage, this.props.pageSize).then((data) => {
+            this.props.toggleFetching(false);
+            this.props.getUsers(data.items);
+            this.props.setNumberOfUsers(data.totalCount);
+        });
     }
 
     goToPage = (page) => {
         this.props.setPageNumber(page);
         this.props.toggleFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`)
-            .then((response)=>{
+        userApi.getUsers(page, this.props.pageSize)
+            .then((data) => {
                 this.props.toggleFetching(false);
-                this.props.getUsers(response.data.items);
-                this.props.setNumberOfUsers(response.data.totalCount);
+                this.props.getUsers(data.items);
+                this.props.setNumberOfUsers(data.totalCount);
             });
     }
 

@@ -11,11 +11,10 @@ import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 
 function App() {
-    const vr = React.version;
     return (
             <div className="App-container">
                 <HeaderContainer/>
-                Версия React:{vr};{/*17.0.1*/}
+                {/*Версия React:{React.version};*/}{/*17.0.1*/}
                 <Navbar/>
                 <div className="App-container-content">
                     <Route path="/dialogs" render={() => <DialogsContainer />}/>
