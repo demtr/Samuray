@@ -4,6 +4,7 @@ const GET_USERS = "GET_USERS";
 const SET_PAGE_NUMBER = "SET_PAGE_NUMBER";
 const SET_NUMBER_OF_USERS = "SET_NUMBER_OF_USERS";
 const SET_FETCHING = "SET_FETCHING";
+const SET_FOLLOW_FETCHING = "SET_FOLLOW_FETCHING";
 
 let initialState = {
     users: [
@@ -15,7 +16,8 @@ let initialState = {
     totUsers: undefined,
     currentPage: 1,
     numberOfPages: undefined,
-    isFetching: false
+    isFetching: false,
+    followButtonFetching: [] // массив id пользователей, у кот.идёт обновление follow/unfollow
 };
 
 // В reducer передаются action и state. state, относящийся к данной ветке
@@ -63,6 +65,21 @@ const usersReducer = (state=initialState, action) => {
                 isFetching: action.isFetching,
             };
 
+        case SET_FOLLOW_FETCHING:
+        {
+            let arr=[...state.followButtonFetching];
+            if (action.isFetching) {
+                arr.push(action.userId);
+            } else {
+                while (arr.includes(action.userId))
+                    arr.splice(arr.indexOf(action.userId), 1);
+            }
+            return {
+                ...state,  // копия для чистой функции, чтобы не изменялись передаваемые параметры
+                followButtonFetching: arr
+            };
+        }
+
         default:
             break;
     }
@@ -75,5 +92,6 @@ export const getUsersAC = (users) => ({type:GET_USERS, users});
 export const setPageNumberAC = (page) => ({type:SET_PAGE_NUMBER, pageNumber:page});
 export const setNumberOfUsersAC = (allUsers) => ({type:SET_NUMBER_OF_USERS, totUsers:allUsers});
 export const toggleFetchingAC = (fetch) => ({type:SET_FETCHING, isFetching:fetch});
+export const toggleFollowButton = (fetch, userId) => ({type:SET_FOLLOW_FETCHING, isFetching:fetch, userId});
 
 export default usersReducer;

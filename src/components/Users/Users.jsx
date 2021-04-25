@@ -30,17 +30,23 @@ let Users = (props) => {
                         </NavLink>
                     </div>
                     <div>{el.followed ?
-                        <button onClick={() => {
+                        <button disabled={props.followButtonFetching?.some(id=>id===el.id)}
+                                onClick={() => {
+                            props.toggleFollowButton(true, el.id);
                             userApi.unSubscribe(el.id)
                                 .then((data) => {
+                                    props.toggleFollowButton(false, el.id);
                                     if (data.resultCode === 0) {
                                         props.onUnFollow(el.id);
                                     }
                                 });
                         }}>unfollow</button> :
-                        <button onClick={() => {
+                        <button disabled={props.followButtonFetching?.some(id=>id===el.id)}
+                                onClick={() => {
+                            props.toggleFollowButton(true, el.id);
                             userApi.subscribe(el.id)
                                 .then((data) => {
+                                    props.toggleFollowButton(false, el.id);
                                     if (data.resultCode === 0) {
                                         props.onFollow(el.id);
                                     }

@@ -6,7 +6,7 @@ import {
     toggleFetchingAC,
     setNumberOfUsersAC,
     setPageNumberAC,
-    unfollowAC
+    unfollowAC, toggleFollowButton
 } from "../../redux/usersReducer";
 import React from "react";
 import Preloader from "../common/Preloader";
@@ -45,6 +45,8 @@ class UsersContainer extends React.Component {
                    onFollow={this.props.onFollow}
                    onUnFollow={this.props.onUnFollow}
                    goToPage={this.goToPage}
+                   followButtonFetching={this.props.followButtonFetching}
+                   toggleFollowButton={this.props.toggleFollowButton}
             /></>;
 
     }
@@ -57,7 +59,8 @@ let mapStateToProps = (state) => {
         totUsers: state.usersBlock.totUsers,
         currentPage: state.usersBlock.currentPage,
         pageSize: state.usersBlock.pageSize,
-        isFetching: state.usersBlock.isFetching
+        isFetching: state.usersBlock.isFetching,
+        followButtonFetching: state.usersBlock.followButtonFetching
     };
 }
 
@@ -67,5 +70,6 @@ export default connect(mapStateToProps, {
     getUsers: getUsersAC,
     setNumberOfUsers: setNumberOfUsersAC,
     setPageNumber: setPageNumberAC,
-    toggleFetching: toggleFetchingAC
+    toggleFetching: toggleFetchingAC,
+    toggleFollowButton
 })(UsersContainer);
