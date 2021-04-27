@@ -1,3 +1,5 @@
+import {userApi} from "../api/api";
+
 const ADD_POST = "ADD-POST";
 const CHANGE_MESSAGE = "CHANGE-MESSAGE";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
@@ -60,5 +62,12 @@ const profileBlockReducer = (state=initialState, action) => {
 export const addPostActionCreator = () => ({type:ADD_POST});
 export const changeMessageActionCreator = (text) => ({type:CHANGE_MESSAGE, msgText:text});
 export const setUserProfile = (profile) => ({type:SET_USER_PROFILE, profile});
+
+export const getUserProfileThunkCreator = (userId) => (dispatch) => {
+    return userApi.setProfile(userId)
+        .then((data)=>{
+            dispatch(setUserProfile(data));
+        });
+}
 
 export default profileBlockReducer;
