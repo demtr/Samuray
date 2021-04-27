@@ -1,37 +1,21 @@
 import {connect} from "react-redux";
 import Users from "./Users";
 import {
-    followAC,
-    getUsersAC,
-    toggleFetchingAC,
-    setNumberOfUsersAC,
     setPageNumberAC,
-    unfollowAC, toggleFollowButton
+    getUsersThunkCreator, unfollow, follow
 } from "../../redux/usersReducer";
 import React from "react";
 import Preloader from "../common/Preloader";
-import {userApi} from "../../api/api";
 
 class UsersContainer extends React.Component {
     // Метод componentDidMount вызывается только 1 раз после отрисовки компоненты
     componentDidMount() {
-        this.props.toggleFetching(true);
-        userApi.getUsers(this.props.currentPage, this.props.pageSize).then((data) => {
-            this.props.toggleFetching(false);
-            this.props.getUsers(data.items);
-            this.props.setNumberOfUsers(data.totalCount);
-        });
+        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize);
     }
 
     goToPage = (page) => {
         this.props.setPageNumber(page);
-        this.props.toggleFetching(true);
-        userApi.getUsers(page, this.props.pageSize)
-            .then((data) => {
-                this.props.toggleFetching(false);
-                this.props.getUsers(data.items);
-                this.props.setNumberOfUsers(data.totalCount);
-            });
+        this.props.getUsersThunkCreator(page, this.props.pageSize);
     }
 
     render() {
@@ -42,16 +26,14 @@ class UsersContainer extends React.Component {
                    totUsers={this.props.totUsers}
                    pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
-                   onFollow={this.props.onFollow}
-                   onUnFollow={this.props.onUnFollow}
-                   goToPage={this.goToPage}
                    followButtonFetching={this.props.followButtonFetching}
-                   toggleFollowButton={this.props.toggleFollowButton}
+                   goToPage={this.goToPage}
+                   follow={this.props.follow}
+                   unfollow={this.props.unfollow}
             /></>;
 
     }
 }
-
 
 let mapStateToProps = (state) => {
     return {
@@ -65,11 +47,7 @@ let mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-    onFollow: followAC,
-    onUnFollow: unfollowAC,
-    getUsers: getUsersAC,
-    setNumberOfUsers: setNumberOfUsersAC,
     setPageNumber: setPageNumberAC,
-    toggleFetching: toggleFetchingAC,
-    toggleFollowButton
+    getUsersThunkCreator,
+    unfollow, follow
 })(UsersContainer);

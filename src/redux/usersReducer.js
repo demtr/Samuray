@@ -1,6 +1,8 @@
+import {userApi} from "../api/api";
+
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
-const GET_USERS = "GET_USERS";
+const SET_USERS = "SET_USERS";
 const SET_PAGE_NUMBER = "SET_PAGE_NUMBER";
 const SET_NUMBER_OF_USERS = "SET_NUMBER_OF_USERS";
 const SET_FETCHING = "SET_FETCHING";
@@ -23,10 +25,10 @@ let initialState = {
 // В reducer передаются action и state. state, относящийся к данной ветке
 const usersReducer = (state=initialState, action) => {
     switch (action.type) {
-        case GET_USERS:
+        case SET_USERS:
             return {
                 ...state,  // копия для чистой функции, чтобы не изменялись передаваемые параметры
-                users: [/*...state.users,*/ ...action.users], // полностью заменяем массив контактов
+                users: [...action.users], // полностью заменяем массив контактов
             };
 
         case FOLLOW: // добавить в друзья
@@ -88,10 +90,49 @@ const usersReducer = (state=initialState, action) => {
 
 export const followAC = (userId) => ({type:FOLLOW, userId});
 export const unfollowAC = (userId) => ({type:UNFOLLOW, userId});
-export const getUsersAC = (users) => ({type:GET_USERS, users});
+export const setUsersAC = (users) => ({type:SET_USERS, users});
 export const setPageNumberAC = (page) => ({type:SET_PAGE_NUMBER, pageNumber:page});
 export const setNumberOfUsersAC = (allUsers) => ({type:SET_NUMBER_OF_USERS, totUsers:allUsers});
 export const toggleFetchingAC = (fetch) => ({type:SET_FETCHING, isFetching:fetch});
 export const toggleFollowButton = (fetch, userId) => ({type:SET_FOLLOW_FETCHING, isFetching:fetch, userId});
+
+export const getUsersThunkCreator = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(toggleFetchingAC(true));
+        userApi.getUsers(currentPage, pageSize).then((data) => {
+            dispatch(toggleFetchingAC(false));
+            dispatch(setUsersAC(data.items));
+            dispatch(setNumberOfUsersAC(data.totalCount));
+        });
+    }
+}
+
+// ThunkCreator для unfollow
+export const unfollow = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleFollowButton(true, userId));
+        userApi.unSubscribe(userId)
+            .then((data) => {
+                dispatch(toggleFollowButton(false, userId));
+                if (data.resultCode === 0) {
+                    dispatch(unfollowAC(userId));
+                }
+            });
+    }
+}
+
+// ThunkCreator для follow
+export const follow = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleFollowButton(true, userId));
+        userApi.subscribe(userId)
+            .then((data) => {
+                dispatch(toggleFollowButton(false, userId));
+                if (data.resultCode === 0) {
+                    dispatch(followAC(userId));
+                }
+            });
+    }
+}
 
 export default usersReducer;
