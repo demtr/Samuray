@@ -9,7 +9,7 @@ const DAL = axios.create({
 // Набор методов для работы с server API
 export const userApi = {
     getUsers (currentPage=1, pageSize=50) {
-        return DAL.get(`users?page=${currentPage}&count=${pageSize}`)
+        return DAL.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${pageSize}`)
             .then(response => response.data)
     },
     subscribe(userId) {

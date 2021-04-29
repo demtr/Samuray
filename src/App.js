@@ -9,6 +9,7 @@ import Settings from "./components/Settings/Settings";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import LoginForm from "./components/Login/Login";
 
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                     <Route path="/music" component={Music}/>
                     <Route path="/settings" component={Settings}/>
                     <Route path="/users" component={UsersContainer}/>
+                    <Route path="/login" component={LoginForm}/>
                 </div>
             </div>
     );

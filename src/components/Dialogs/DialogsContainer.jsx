@@ -4,14 +4,19 @@ import {connect} from "react-redux";
 
 let mapStateToProps = (state) => {
     return {
-       state: state.dialogBlock
+        state: state.dialogBlock,
+        isAuth: state.auth.isAuth
     };
 };
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        onAddMessage: () => {dispatch(addMessageToDialogActionCreator());},
-        onMessageChange: (text) => {dispatch(changeDialogMessageActionCreator(text));}
+        onAddMessage: () => {
+            dispatch(addMessageToDialogActionCreator());
+        },
+        onMessageChange: (text) => {
+            dispatch(changeDialogMessageActionCreator(text));
+        }
     };
 }
 
