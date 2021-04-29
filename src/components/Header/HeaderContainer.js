@@ -1,18 +1,11 @@
 import React from "react";
 import Header from "./Header";
 import {connect} from "react-redux";
-import {setAuthUser} from "../../redux/authReducer";
-import {userApi} from "../../api/api";
+import {getAuthorizedUserThunkCreator} from "../../redux/authReducer";
 
 class HeaderContainer extends React.Component {
     componentDidMount() {
-        userApi.isAuthorized()
-            .then((data) => {
-                if (data.resultCode === 0) {
-                    let {id, email, login} = data.data; // деструктурирующее присваивание
-                    this.props.setAuthUser(id, email, login);
-                }
-            });
+        this.props.getAuthorizedUserThunkCreator();
     }
 
     render() {
@@ -28,4 +21,4 @@ const mapStateToProps = (state) => ({
     isAuth: state.auth.isAuth
 });
 
-export default connect(mapStateToProps,{setAuthUser})(HeaderContainer);
+export default connect(mapStateToProps, {getAuthorizedUserThunkCreator})(HeaderContainer);

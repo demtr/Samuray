@@ -17,3 +17,11 @@
     font-size: x-small;
     cursor: pointer;
 }
+
+.jump {
+    color: red;
+    border: solid 2px orange;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: cornsilk;
+}
