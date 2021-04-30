@@ -4,6 +4,7 @@ import {connect} from "react-redux";
 import {getUserProfileThunkCreator} from "../../redux/profileBlockReducer";
 import {withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
@@ -22,10 +23,8 @@ const mapStateToProps = (state) => ({
     profile: state.profileBlock.profile
 })
 
-const ProfileContainerWithRouter = withRouter(ProfileContainer);
-
-// Добавили функционал redirect на страницу login в случае неавторизованного
-// пользователя с применением ф-ции HOC
-const ProfileContainerWithRouterAndAuthRedirect = withAuthRedirect(ProfileContainerWithRouter);
-
-export default connect(mapStateToProps, {getUserProfileThunkCreator})(ProfileContainerWithRouterAndAuthRedirect);
+export default compose(
+    connect(mapStateToProps, {getUserProfileThunkCreator}), //#3
+    withAuthRedirect, //#2
+    withRouter //#1
+)(ProfileContainer);
