@@ -6,6 +6,7 @@ import {
 } from "../../redux/usersReducer";
 import React from "react";
 import Preloader from "../common/Preloader";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 class UsersContainer extends React.Component {
     // Метод componentDidMount вызывается только 1 раз после отрисовки компоненты
@@ -35,6 +36,10 @@ class UsersContainer extends React.Component {
     }
 }
 
+// Добавили функционал redirect на страницу login в случае неавторизованного
+// пользователя с применением ф-ции HOC
+const UsersContainerWithRedirect = withAuthRedirect(UsersContainer);
+
 let mapStateToProps = (state) => {
     return {
         users: state.usersBlock.users,
@@ -50,4 +55,4 @@ export default connect(mapStateToProps, {
     setPageNumber: setPageNumberAC,
     getUsersThunkCreator,
     unfollow, follow
-})(UsersContainer);
+})(UsersContainerWithRedirect);
