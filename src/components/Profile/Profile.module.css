@@ -1,1 +1,6 @@
 .land {width:100%}
+.status {
+    font-weight: bold;
+    margin-top: 12px;
+    color: blue;
+}

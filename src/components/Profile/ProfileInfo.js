@@ -2,6 +2,7 @@ import land from "../../img/landscape.webp";
 import c from "./Profile.module.css";
 import ava from "../../img/ava.png"
 import Preloader from "../common/Preloader";
+import ProfileStatus from "./ProfileStatus";
 
 const ProfileInfo = (props) => {
     if (!props.profile) {
@@ -20,6 +21,7 @@ const ProfileInfo = (props) => {
         )}</div>
         <div><br/><b>Поиск работы:</b> {props.profile.lookingForAJob?<i>"Да"</i>:"Нет"}</div>
         {props.profile.lookingForAJob?<div><b>Описание:</b> {props.profile.lookingForAJobDescription}</div>:""}
+        <ProfileStatus text={"All right!"}/>
     </>
 }
 
