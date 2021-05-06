@@ -5,7 +5,13 @@ import c from "./Profile.module.css";
 class ProfileStatus extends Component {
     state = {
         editStatus: false,
-        userStatus: this.props.text
+        userStatus: this.props.status
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.status !== prevProps.status) {
+            this.setState({userStatus: this.props.status})
+        }
     }
 
     setEditModeOn = () => {
@@ -27,7 +33,7 @@ class ProfileStatus extends Component {
         return <div>
             <div className={c.status}>Статус:</div>
             {!this.state.editStatus &&
-                <div onDoubleClick={this.setEditModeOn}>{this.props.text || "нет"}</div>}
+                <div onDoubleClick={this.setEditModeOn}>{this.props.status || "нет"}</div>}
             {this.state.editStatus &&
                 <div><input onBlur={this.setEditModeOff}
                             autoFocus={true}
