@@ -23,8 +23,8 @@ export const userApi = {
             .then(response => response.data)
     },
     setProfile(userId) {
-        return DAL.get(`profile/${userId}`)
-            .then(response => response.data)
+        console.warn("Obsolete method!. Move to profileApi.")
+        return profileApi.getProfile(userId);
     },
     isAuthorized() {
         return DAL.get(`auth/me`)
@@ -32,3 +32,16 @@ export const userApi = {
     }
 };
 
+export const profileApi = {
+    getProfile(userId) {
+        return DAL.get(`profile/${userId}`)
+            .then(response => response.data);
+    },
+    getStatus(userId) {
+        return DAL.get(`profile/status/${userId}`)
+            .then(response => response.data);
+    },
+    updateStatus(status) {
+        return DAL.put(`profile/status/`,{status});
+    },
+}
