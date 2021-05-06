@@ -6,6 +6,8 @@ import {
 } from "../../redux/usersReducer";
 import React from "react";
 import Preloader from "../common/Preloader";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 class UsersContainer extends React.Component {
     // Метод componentDidMount вызывается только 1 раз после отрисовки компоненты
@@ -46,8 +48,11 @@ let mapStateToProps = (state) => {
     };
 }
 
-export default connect(mapStateToProps, {
-    setPageNumber: setPageNumberAC,
-    getUsersThunkCreator,
-    unfollow, follow
-})(UsersContainer);
+export default compose(
+    connect(mapStateToProps, {
+        setPageNumber: setPageNumberAC,
+        getUsersThunkCreator,
+        unfollow, follow
+    }),
+    withAuthRedirect
+)(UsersContainer);

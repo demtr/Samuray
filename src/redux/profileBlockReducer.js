@@ -1,8 +1,10 @@
-import {userApi} from "../api/api";
+import {profileApi} from "../api/api";
 
 const ADD_POST = "ADD-POST";
 const CHANGE_MESSAGE = "CHANGE-MESSAGE";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
+const SET_USER_STATUS = "SET_USER_STATUS";
+
 let initialState = {
     anyPosts: [
         {id: 1, message: "Hello, how are you?", lcount: 12},
@@ -10,11 +12,12 @@ let initialState = {
         {id: 3, message: "It works correct!", lcount: 19},
     ],
     newMsgText: "Type text here",
-    profile: null
+    profile: null,
+    status: ""
 };
 
 // В reducer передаются action и state. state, относящийся к данной ветке
-const profileBlockReducer = (state=initialState, action) => {
+const profileBlockReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST:
             // Метод для добавления сообщения в массив данных на стороне BLL.
@@ -53,20 +56,40 @@ const profileBlockReducer = (state=initialState, action) => {
         case SET_USER_PROFILE:
             return {...state, profile: action.profile};
 
+        case SET_USER_STATUS:
+            return {...state, status: action.status};
+
         default:
             break;
     }
     return state;
 }
 
-export const addPostActionCreator = () => ({type:ADD_POST});
-export const changeMessageActionCreator = (text) => ({type:CHANGE_MESSAGE, msgText:text});
-export const setUserProfile = (profile) => ({type:SET_USER_PROFILE, profile});
+export const addPostActionCreator = () => ({type: ADD_POST});
+export const changeMessageActionCreator = (text) => ({type: CHANGE_MESSAGE, msgText: text});
+export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
+export const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
 
 export const getUserProfileThunkCreator = (userId) => (dispatch) => {
-    return userApi.setProfile(userId)
-        .then((data)=>{
+    return profileApi.getProfile(userId)
+        .then((data) => {
             dispatch(setUserProfile(data));
+        });
+}
+
+export const getUserStatusThunkCreator = (userId) => (dispatch) => {
+    return profileApi.getStatus(userId)
+        .then((data) => {
+            dispatch(setUserStatus(data));
+        });
+}
+
+export const updateUserStatusThunkCreator = (status) => (dispatch) => {
+    return profileApi.updateStatus(status)
+        .then((data) => {
+            if (data.resultCode === 0) {
+                dispatch(setUserStatus(status));
+            }
         });
 }
 

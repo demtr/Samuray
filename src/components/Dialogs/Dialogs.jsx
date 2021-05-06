@@ -1,17 +1,12 @@
 import c from "./Dialogs.module.css";
 import OneDialog from "./OneDialog/OneDialog";
 import Message from "./Message/Message";
-import {Redirect} from "react-router-dom"
 
 const Dialogs = (p) => {
     const dlgDataComp = p.state.dialogs.map(dlg => <OneDialog key={dlg.id} name={dlg.name} id={dlg.id}/>);
     const msgDataComp = p.state.messages.map(m => <Message key={m.id} message={m.message}/>);
     const onAddMessage = () => {p.onAddMessage();};
     const onMessageChange = (e) => {p.onMessageChange(e.target.value);};
-
-    if (!p.isAuth) {
-        return <Redirect to="/login"/>
-    }
 
     return (
         <div className={c.dialogs}>

@@ -23,14 +23,14 @@ let Users = (props) => {
         };
         pages = pages.map(p => <span onClick={() => {props.goToPage(p)}}
                                      className={clLink(p)}>{p} </span>);
-        if (firstPage>1) {
+        if (firstPage>10) {
             let m20 = firstPage-10<1? 1 :firstPage-10;
             pages = [<span><span onClick={() => {props.goToPage(m20)}}
                            className={classNames([c.pageLink, c.jump])}>-20 &lt;&lt; </span> &nbsp;</span>,...pages]
         }
         if (props.currentPage < totPages-10) {
             let p20 = props.currentPage+20 > totPages? totPages :props.currentPage+20;
-            pages = [...pages, <span>  &nbsp; &nbsp; <span onClick={() => {props.goToPage(p20)}}
+            pages = [...pages, <span>&nbsp;<span onClick={() => {props.goToPage(p20)}}
                            className={classNames([c.pageLink, c.jump])}> &gt;&gt; +20</span></span>]
         }
         return pages;
