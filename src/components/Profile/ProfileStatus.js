@@ -15,6 +15,7 @@ class ProfileStatus extends Component {
     }
 
     setEditModeOn = () => {
+        if (!this.props.isMe) return;
         this.setState({
             editStatus: true
         });
@@ -23,7 +24,9 @@ class ProfileStatus extends Component {
         this.setState({
             editStatus: false
         });
-        this.props.updateStatus(this.state.userStatus);
+        if (this.props.status !== this.state.userStatus) {
+            this.props.updateStatus(this.state.userStatus);
+        }
     }
     onStatusChange = (e) => {
         this.setState({userStatus: e.target.value});

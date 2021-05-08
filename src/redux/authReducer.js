@@ -1,6 +1,7 @@
-import {userApi} from "../api/api";
+import {authApi} from "../api/api";
 
 const SET_AUTH_USER = "SET_AUTH_USER";
+const LOGIN_USER = "LOGIN_USER";
 
 let initialState = {
     userId: null,
@@ -18,7 +19,8 @@ const authReducer = (state = initialState, action) => {
                 ...action.data,
                 isAuth: true
             };
-
+        case LOGIN_USER:
+            return {...state, email: action.email}
         default:
             break;
     }
@@ -26,9 +28,10 @@ const authReducer = (state = initialState, action) => {
 }
 
 export const setAuthUser = (id, email, login) => ({type: SET_AUTH_USER, data: {userId: id, email, login}});
+export const loginUser = (email) => ({type: LOGIN_USER, email});
 
 export const getAuthorizedUserThunkCreator = () => (dispatch) => {
-    userApi.isAuthorized()
+    authApi.isAuthorized()
         .then((data) => {
             if (data.resultCode === 0) {
                 let {id, email, login} = data.data; // деструктурирующее присваивание
@@ -36,6 +39,21 @@ export const getAuthorizedUserThunkCreator = () => (dispatch) => {
             }
         });
 
+}
+
+export const loginUserThunkCreator = (login) => (dispatch) => {
+                console.log("loginUserThunkCreator success!")
+    authApi.loginUser(login)
+        .then((data) => {
+            if (data.resultCode === 0) {
+                console.log("loginUserThunkCreator success! data=",data.data)
+                let {email} = login; // деструктурирующее присваивание
+                dispatch(loginUser( email));
+            } else {
+                console.warn("loginUserThunkCreator ERROR! messages=",data.messages)
+
+            }
+        });
 }
 
 export default authReducer;

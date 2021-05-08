@@ -25,10 +25,6 @@ export const userApi = {
     setProfile(userId) {
         console.warn("Obsolete method!. Move to profileApi.")
         return profileApi.getProfile(userId);
-    },
-    isAuthorized() {
-        return DAL.get(`auth/me`)
-            .then(response => response.data)
     }
 };
 
@@ -44,4 +40,14 @@ export const profileApi = {
     updateStatus(status) {
         return DAL.put(`profile/status/`,{status});
     },
+}
+
+export const authApi = {
+    isAuthorized() {
+        return DAL.get(`auth/me`)
+            .then(response => response.data)
+    },
+    loginUser(data) {
+        return DAL.post('auth/login',data);
+    }
 }

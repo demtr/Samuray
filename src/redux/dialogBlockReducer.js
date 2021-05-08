@@ -1,5 +1,5 @@
 const ADD_MESSAGE_TO_DIALOG = "ADD-MESSAGE-TO-DIALOG";
-const CHANGE_DIALOG_MESSAGE = "CHANGE-DIALOG-MESSAGE";
+
 let initialState = {
     dialogs: [
         {id: 1, name: "Ivan"},
@@ -12,8 +12,7 @@ let initialState = {
         {id: 1, message: "Hello!"},
         {id: 2, message: "Hey you!"},
         {id: 3, message: "Yo!"},
-    ],
-    newMsgText: ""
+    ]
 };
 
 // В reducer передаются action и state. state, относящийся к данной ветке
@@ -33,17 +32,12 @@ const dialogBlockReducer = (state = initialState, action) => {
             let nextId = getMaxId() + 1;
             let newMsg = {
                 id: nextId,
-                message: state.newMsgText
+                message: action.msg
             };
             return {
                 ...state,
                 messages: [...state.messages, newMsg],
-                newMsgText: "" // обнуляем поле сообщения после добавления его текста в store
             };
-
-        case CHANGE_DIALOG_MESSAGE:
-            // Метод заносит обновлённое сообщение в store при любом минимальном изменении
-            return {...state, newMsgText: action.msgText};
 
         default:
             break;
@@ -51,7 +45,6 @@ const dialogBlockReducer = (state = initialState, action) => {
     return state;
 };
 
-export const addMessageToDialogActionCreator = () => ({type: ADD_MESSAGE_TO_DIALOG});
-export const changeDialogMessageActionCreator = (text) => ({type: CHANGE_DIALOG_MESSAGE, msgText: text});
+export const addMessageToDialogActionCreator = (msg) => ({type: ADD_MESSAGE_TO_DIALOG, msg});
 
 export default dialogBlockReducer;
