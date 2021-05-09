@@ -1,12 +1,15 @@
 import {Field, reduxForm} from 'redux-form';
 import {loginUserThunkCreator} from "../../redux/authReducer";
+import {Input} from "../common/FormControls";
+import {required} from "../common/validators";
 
 const LoginForm = (props) => {
     return <form onSubmit={props.handleSubmit}>
-        <div><Field type="text" name="email" component="input" placeholder="login"/></div>
-        <div><Field type="password" name="password" component="input" placeholder="password"/></div>
-        <div><Field type="checkbox" name="rememberMe" component="input"/>запомнить</div>
-        {/*<div><Field type="submit" name="submit" component="input" value="Login"/></div>*/}
+        <div><Field type="text" name="email" component={Input}
+                    validate={[required]} placeholder="login"/></div>
+        <div><Field type="password" name="password" component={Input}
+                    validate={[required]} placeholder="password"/></div>
+        <div><Field type="checkbox" name="rememberMe" component={Input}/>запомнить</div>
         <div><button>Login</button></div>
     </form>
 }
@@ -16,7 +19,6 @@ const ReduxFormLogin = reduxForm({
 })(LoginForm);
 
 const mySubmit = (formData) => {
-    console.log(formData);
     loginUserThunkCreator(formData);
 };
 

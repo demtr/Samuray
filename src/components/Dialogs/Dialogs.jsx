@@ -2,6 +2,8 @@ import c from "./Dialogs.module.css";
 import OneDialog from "./OneDialog/OneDialog";
 import Message from "./Message/Message";
 import {Field, reduxForm} from "redux-form";
+import {Textarea} from "../common/FormControls";
+import {required, maxLengthCreator} from "../common/validators";
 
 const Dialogs = (p) => {
     const dlgDataComp = p.state.dialogs.map(dlg => <OneDialog key={dlg.id} name={dlg.name} id={dlg.id}/>);
@@ -21,11 +23,15 @@ const Dialogs = (p) => {
     );
 };
 
+// Через замыкание создаём ф-цию с максимальной требуемой длиной
+const maxLength = maxLengthCreator(100);
+
 const newMsgForm = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field name="msgText" component="textarea" placeholder="Enter your text" />
+                <Field name="msgText" component={Textarea}
+                       validate={[required, maxLength]} placeholder="Enter your text" />
             </div>
             <div>
                 <button>Отправить</button>

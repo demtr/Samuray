@@ -76,7 +76,7 @@ export const getUserStatusThunkCreator = (userId) => (dispatch) => {
 export const updateUserStatusThunkCreator = (status) => (dispatch) => {
     return profileApi.updateStatus(status)
         .then((data) => {
-            if (data.resultCode === 0) {
+            if (data.data.resultCode === 0) {
                 dispatch(setUserStatus(status));
             }
         });

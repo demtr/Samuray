@@ -2,6 +2,8 @@ import c from "./MyPosts.module.css";
 import Post from "./Post/Post";
 import React from "react";
 import {Field, reduxForm} from "redux-form";
+import {maxLengthCreator, required} from "../../common/validators";
+import {Textarea} from "../../common/FormControls";
 
 
 // Функциональная компонента ничего не знает о store, работает только с контейнерной компонентой
@@ -28,10 +30,13 @@ const MyPosts = (p) => {
     );
 }
 
+// Через замыкание создаём ф-цию с максимальной требуемой длиной
+const maxLength = maxLengthCreator(10);
+
 const newPostForm = (props) => {
     return <form onSubmit={props.handleSubmit}>
-        <div><Field component={"textarea"} name={"newMsgText"} className={c.new}
-                    placeholder={"Type new post here"}/>
+        <div><Field component={Textarea} name={"newMsgText"} className={c.new}
+                    placeholder={"Type new post here"} validate={[required, maxLength]}/>
         </div>
         <div>
             <button>Add post</button>

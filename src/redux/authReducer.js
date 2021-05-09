@@ -42,11 +42,9 @@ export const getAuthorizedUserThunkCreator = () => (dispatch) => {
 }
 
 export const loginUserThunkCreator = (login) => (dispatch) => {
-                console.log("loginUserThunkCreator success!")
     authApi.loginUser(login)
         .then((data) => {
             if (data.resultCode === 0) {
-                console.log("loginUserThunkCreator success! data=",data.data)
                 let {email} = login; // деструктурирующее присваивание
                 dispatch(loginUser( email));
             } else {
