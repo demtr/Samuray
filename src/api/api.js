@@ -45,9 +45,14 @@ export const profileApi = {
 export const authApi = {
     isAuthorized() {
         return DAL.get(`auth/me`)
-            .then(response => response.data)
+            .then(response => response.data);
     },
     loginUser(data) {
-        return DAL.post('auth/login',data);
+        return DAL.post('auth/login',data)
+            .then(response => response.data);
+    },
+    logoutUser() {
+        return DAL.delete('auth/login')
+            .then(response => response.data);
     }
 }

@@ -12,10 +12,10 @@ export const Textarea = ({input, meta, ...props}) => {
 
 export const Input = ({input, meta, ...props}) => {
     const hasError = meta.touched && meta.error;
-    return <div>
-        <div className={style.formControl + " " + (hasError ? style.error : "") }>
+    return <span>
+        <span className={style.formControl + " " + (hasError ? style.error : "") }>
             <input {...input} {...props}/>
-        </div>
+        </span>
         {hasError && <span className={style.error}>{meta.error}</span>}
-    </div>;
+    </span>;
 }

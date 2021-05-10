@@ -1,7 +1,6 @@
 import {authApi} from "../api/api";
 
 const SET_AUTH_USER = "SET_AUTH_USER";
-const LOGIN_USER = "LOGIN_USER";
 
 let initialState = {
     userId: null,
@@ -16,40 +15,45 @@ const authReducer = (state = initialState, action) => {
         case SET_AUTH_USER:
             return {
                 ...state,  // копия для чистой функции, чтобы не изменялись передаваемые параметры
-                ...action.data,
-                isAuth: true
+                ...action.data
             };
-        case LOGIN_USER:
-            return {...state, email: action.email}
+
         default:
             break;
     }
     return state;
 }
 
-export const setAuthUser = (id, email, login) => ({type: SET_AUTH_USER, data: {userId: id, email, login}});
-export const loginUser = (email) => ({type: LOGIN_USER, email});
+export const setAuthUser = (id, email, login, isAuth) => ({type: SET_AUTH_USER, data: {userId: id, email, login, isAuth}});
 
 export const getAuthorizedUserThunkCreator = () => (dispatch) => {
     authApi.isAuthorized()
         .then((data) => {
             if (data.resultCode === 0) {
                 let {id, email, login} = data.data; // деструктурирующее присваивание
-                dispatch(setAuthUser(id, email, login));
+                dispatch(setAuthUser(id, email, login, true));
             }
         });
-
 }
 
 export const loginUserThunkCreator = (login) => (dispatch) => {
     authApi.loginUser(login)
         .then((data) => {
             if (data.resultCode === 0) {
-                let {email} = login; // деструктурирующее присваивание
-                dispatch(loginUser( email));
+                dispatch( getAuthorizedUserThunkCreator());
             } else {
                 console.warn("loginUserThunkCreator ERROR! messages=",data.messages)
+            }
+        });
+}
 
+export const logoutUserThunkCreator = () => (dispatch) => {
+    authApi.logoutUser()
+        .then((data) => {
+            if (data.resultCode === 0) {
+                dispatch(setAuthUser(null, null, null, false));
+            } else {
+                console.warn("logoutUserThunkCreator ERROR! messages=",data.messages)
             }
         });
 }

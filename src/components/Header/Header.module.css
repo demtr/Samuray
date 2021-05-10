@@ -13,3 +13,11 @@
 .login a {
    color: white;
 }
+.name {
+   font-weight: bold;
+   background-color: gold;
+   padding: 3px 16px;
+   border: 2px solid red;
+   border-radius: 6px;
+   margin-right: 5px;
+}
