@@ -8,7 +8,7 @@ import {compose} from "redux";
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
-        let userId = this.props.match.params.userId || this.props.userId || 2;
+        let userId = this.props.match.params.userId || this.props.myUserId || 2;
 
         this.props.getUserProfile(userId);
         this.props.getUserStatus(userId);
@@ -23,7 +23,7 @@ class ProfileContainer extends React.Component {
 const mapStateToProps = (state) => ({
     profile: state.profileBlock.profile,
     status: state.profileBlock.status,
-    userId: state.auth.userId
+    myUserId: state.auth.userId
 });
 const mapDispatchToProps = (dispatch) => ({
     getUserProfile: (userId) => {dispatch(getUserProfileThunkCreator(userId))},
@@ -33,6 +33,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps), //#3
-    // withAuthRedirect, //#2 - HOC
+    withAuthRedirect, //#2 - HOC
     withRouter //#1
 )(ProfileContainer);

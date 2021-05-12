@@ -1,4 +1,6 @@
 .header {
+   position: fixed;
+   width: 100%;
    grid-area: header;
    background-color: burlywood;
 }
