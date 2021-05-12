@@ -1,7 +1,6 @@
 import {profileApi} from "../api/api";
 
 const ADD_POST = "ADD-POST";
-const CHANGE_MESSAGE = "CHANGE-MESSAGE";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_USER_STATUS = "SET_USER_STATUS";
 
@@ -11,7 +10,6 @@ let initialState = {
         {id: 2, message: "It's my first post!", lcount: 45},
         {id: 3, message: "It works correct!", lcount: 19},
     ],
-    newMsgText: "Type text here",
     profile: null,
     status: ""
 };
@@ -21,8 +19,7 @@ const profileBlockReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST:
             // Метод для добавления сообщения в массив данных на стороне BLL.
-            // Текст сообщения через параметры не передаём, т.к. оно уже передано в State ф-ей changeMsg(),
-            // т.е. мы берем его из state.profileBlock.newMsgText
+            // Текст сообщения берем из action.msg
 
             // В этой функции находим максимальный id поста
             let getMaxId = () => {
@@ -37,22 +34,15 @@ const profileBlockReducer = (state = initialState, action) => {
             let nextId = getMaxId() + 1;
             let newMsg = {
                 id: nextId,
-                message: state.newMsgText,
+                message: action.msg,
                 lcount: 0
             };
 
             return {
                 ...state,  // копия для чистой функции, чтобы не изменялись передаваемые параметры
-                anyPosts: [...state.anyPosts, newMsg], // добавили элемент к скопированному массиву
-                newMsgText: "" // обнуляем поле сообщения после добавления его текста в store
+                anyPosts: [...state.anyPosts, newMsg] // добавили элемент к скопированному массиву
             };
 
-        case CHANGE_MESSAGE:
-            // Метод заносит обновлённое сообщение в store при любом минимальном изменении
-            return {
-                ...state,
-                newMsgText: action.msgText
-            };
         case SET_USER_PROFILE:
             return {...state, profile: action.profile};
 
@@ -65,8 +55,7 @@ const profileBlockReducer = (state = initialState, action) => {
     return state;
 }
 
-export const addPostActionCreator = () => ({type: ADD_POST});
-export const changeMessageActionCreator = (text) => ({type: CHANGE_MESSAGE, msgText: text});
+export const addPostActionCreator = (msg) => ({type: ADD_POST, msg});
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 export const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
 
@@ -87,7 +76,7 @@ export const getUserStatusThunkCreator = (userId) => (dispatch) => {
 export const updateUserStatusThunkCreator = (status) => (dispatch) => {
     return profileApi.updateStatus(status)
         .then((data) => {
-            if (data.resultCode === 0) {
+            if (data.data.resultCode === 0) {
                 dispatch(setUserStatus(status));
             }
         });

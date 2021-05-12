@@ -1,4 +1,5 @@
-import {userApi} from "../api/api";
+import {authApi} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const SET_AUTH_USER = "SET_AUTH_USER";
 
@@ -15,8 +16,7 @@ const authReducer = (state = initialState, action) => {
         case SET_AUTH_USER:
             return {
                 ...state,  // копия для чистой функции, чтобы не изменялись передаваемые параметры
-                ...action.data,
-                isAuth: true
+                ...action.data
             };
 
         default:
@@ -25,17 +25,39 @@ const authReducer = (state = initialState, action) => {
     return state;
 }
 
-export const setAuthUser = (id, email, login) => ({type: SET_AUTH_USER, data: {userId: id, email, login}});
+export const setAuthUser = (id, email, login, isAuth) => ({type: SET_AUTH_USER, data: {userId: id, email, login, isAuth}});
 
 export const getAuthorizedUserThunkCreator = () => (dispatch) => {
-    userApi.isAuthorized()
+    authApi.isAuthorized()
         .then((data) => {
             if (data.resultCode === 0) {
                 let {id, email, login} = data.data; // деструктурирующее присваивание
-                dispatch(setAuthUser(id, email, login));
+                dispatch(setAuthUser(id, email, login, true));
             }
         });
+}
 
+export const loginUserThunkCreator = (login) => (dispatch) => {
+    authApi.loginUser(login)
+        .then((data) => {
+            if (data.resultCode === 0) {
+                dispatch( getAuthorizedUserThunkCreator());
+            } else {
+                dispatch(stopSubmit("login", {_error: data.messages.join(", ")}))
+                console.warn("loginUserThunkCreator ERROR! messages=",data.messages)
+            }
+        });
+}
+
+export const logoutUserThunkCreator = () => (dispatch) => {
+    authApi.logoutUser()
+        .then((data) => {
+            if (data.resultCode === 0) {
+                dispatch(setAuthUser(null, null, null, false));
+            } else {
+                console.warn("logoutUserThunkCreator ERROR! messages=",data.messages)
+            }
+        });
 }
 
 export default authReducer;

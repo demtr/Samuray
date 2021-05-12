@@ -1,4 +1,4 @@
-import {addPostActionCreator, changeMessageActionCreator} from "../../../redux/profileBlockReducer";
+import {addPostActionCreator} from "../../../redux/profileBlockReducer";
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
 
@@ -12,8 +12,7 @@ let mapStateToProps = (state) => {
 // ф-ция возвращает объект коллбеков
 let mapDispatchToProps = (dispatch) => {
     return {
-        newPost: () => {dispatch(addPostActionCreator());},
-        whenPostChanged: (text) => {dispatch(changeMessageActionCreator(text));}
+        newPost: (text) => {dispatch(addPostActionCreator(text));}
     }
 }
 

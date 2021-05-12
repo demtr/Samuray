@@ -15,6 +15,7 @@ class ProfileStatus extends Component {
     }
 
     setEditModeOn = () => {
+        if (!this.props.isMe) return;
         this.setState({
             editStatus: true
         });
@@ -23,7 +24,9 @@ class ProfileStatus extends Component {
         this.setState({
             editStatus: false
         });
-        this.props.updateStatus(this.state.userStatus);
+        if (this.props.status !== this.state.userStatus) {
+            this.props.updateStatus(this.state.userStatus);
+        }
     }
     onStatusChange = (e) => {
         this.setState({userStatus: e.target.value});
@@ -36,7 +39,7 @@ class ProfileStatus extends Component {
                 <div onDoubleClick={this.setEditModeOn}>{this.props.status || "нет"}</div>}
             {this.state.editStatus &&
                 <div><input onBlur={this.setEditModeOff}
-                            autoFocus={true}
+                            autoFocus={true} size="50"
                             onChange={this.onStatusChange}
                             type="text" value={this.state.userStatus}/></div>}
         </div>;
