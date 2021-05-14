@@ -12,7 +12,7 @@ const Header = (props) => {
             <a href="#">Help</a>
             <span className={c.login}>
                 {props.isAuth ?
-                    <span><span className={c.name}>{props.login}</span> <button onClick={props.logoutUserThunkCreator}>Logout</button></span> :
+                    <span><span className={c.name}>{props.login}</span> <button onClick={props.logoutUser}>Logout</button></span> :
                     <NavLink to="/login">login</NavLink>}
             </span>
         </div>

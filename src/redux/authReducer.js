@@ -28,7 +28,7 @@ const authReducer = (state = initialState, action) => {
 export const setAuthUser = (id, email, login, isAuth) => ({type: SET_AUTH_USER, data: {userId: id, email, login, isAuth}});
 
 export const getAuthorizedUserThunkCreator = () => (dispatch) => {
-    authApi.isAuthorized()
+    return authApi.isAuthorized()
         .then((data) => {
             if (data.resultCode === 0) {
                 let {id, email, login} = data.data; // деструктурирующее присваивание
