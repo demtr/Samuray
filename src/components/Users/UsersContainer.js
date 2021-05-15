@@ -8,6 +8,13 @@ import React from "react";
 import Preloader from "../common/Preloader";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPage,
+    getFollowButtonFetching, getIsFetching,
+    getPageSize,
+    getTotalUserCount,
+    getUsers
+} from "../../redux/usersSelectors";
 
 class UsersContainer extends React.Component {
     // Метод componentDidMount вызывается только 1 раз после отрисовки компоненты
@@ -39,12 +46,12 @@ class UsersContainer extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        users: state.usersBlock.users,
-        totUsers: state.usersBlock.totUsers,
-        currentPage: state.usersBlock.currentPage,
-        pageSize: state.usersBlock.pageSize,
-        isFetching: state.usersBlock.isFetching,
-        followButtonFetching: state.usersBlock.followButtonFetching
+        users: getUsers(state),
+        totUsers: getTotalUserCount(state),
+        currentPage: getCurrentPage(state),
+        pageSize: getPageSize(state),
+        isFetching: getIsFetching(state),
+        followButtonFetching: getFollowButtonFetching(state)
     };
 }
 
