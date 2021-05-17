@@ -31,7 +31,7 @@ const MyPosts = (p) => {
 }
 
 // Через замыкание создаём ф-цию с максимальной требуемой длиной
-const maxLength = maxLengthCreator(10);
+const maxLength = maxLengthCreator(30);
 
 const newPostForm = (props) => {
     return <form onSubmit={props.handleSubmit}>
