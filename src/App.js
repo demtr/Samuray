@@ -10,16 +10,27 @@ import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginForm from "./components/Login/Login";
+import {connect} from "react-redux";
+import {initializeApp} from "./redux/appReducer";
+import Preloader from "./components/common/Preloader";
 
-function App() {
-    return (
+class App extends React.Component {
+    componentDidMount() {
+        this.props.initializeApp();
+    }
+
+    render() {
+        if (!this.props.initialized) {
+            return <Preloader/>
+        }
+        return (
             <div className="App-container">
                 <HeaderContainer/>
                 {/*Версия React:{React.version};*/}{/*17.0.1*/}
                 <Navbar/>
                 <div className="App-container-content">
-                    <Route path="/dialogs" render={() => <DialogsContainer />}/>
-                    <Route path="/profile/:userId?" render={() => <ProfileContainer />}/>
+                    <Route path="/dialogs" render={() => <DialogsContainer/>}/>
+                    <Route path="/profile/:userId?" render={() => <ProfileContainer/>}/>
                     <Route path="/news" component={News}/>
                     <Route path="/music" component={Music}/>
                     <Route path="/settings" component={Settings}/>
@@ -27,7 +38,12 @@ function App() {
                     <Route path="/login" component={LoginForm}/>
                 </div>
             </div>
-    );
+        );
+    }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+    initialized: state.app.initialized
+})
+
+export default connect(mapStateToProps,{initializeApp})(App);
