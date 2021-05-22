@@ -3,6 +3,7 @@ import {profileApi} from "../api/api";
 const ADD_POST = "ADD-POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_USER_STATUS = "SET_USER_STATUS";
+const DELETE_POST = "DELETE_POST";
 
 let initialState = {
     anyPosts: [
@@ -49,6 +50,9 @@ const profileBlockReducer = (state = initialState, action) => {
         case SET_USER_STATUS:
             return {...state, status: action.status};
 
+        case DELETE_POST:
+            return {...state, anyPosts: state.anyPosts.filter(p=>p.id!=action.id)};
+
         default:
             break;
     }
@@ -58,6 +62,7 @@ const profileBlockReducer = (state = initialState, action) => {
 export const addPostActionCreator = (msg) => ({type: ADD_POST, msg});
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 export const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
+export const deletePostActionCreator = (id) => ({type: DELETE_POST, id});
 
 export const getUserProfileThunkCreator = (userId) => (dispatch) => {
     return profileApi.getProfile(userId)
