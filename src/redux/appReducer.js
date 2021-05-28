@@ -21,7 +21,7 @@ const appReducer = (state = initialState, action) => {
     return state;
 }
 
-export const setInitialized = () => ({type: INITIALIZED});
+const setInitialized = () => ({type: INITIALIZED});
 
 export const initializeApp = () => (dispatch) => {
     let dispatched = dispatch(getAuthorizedUserThunkCreator());

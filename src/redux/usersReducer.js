@@ -97,41 +97,36 @@ export const toggleFetchingAC = (fetch) => ({type:SET_FETCHING, isFetching:fetch
 export const toggleFollowButton = (fetch, userId) => ({type:SET_FOLLOW_FETCHING, isFetching:fetch, userId});
 
 export const getUsersThunkCreator = (currentPage, pageSize) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(toggleFetchingAC(true));
-        userApi.getUsers(currentPage, pageSize).then((data) => {
-            dispatch(toggleFetchingAC(false));
-            dispatch(setUsersAC(data.items));
-            dispatch(setNumberOfUsersAC(data.totalCount));
-        });
+        let data = await userApi.getUsers(currentPage, pageSize)
+        dispatch(toggleFetchingAC(false));
+        dispatch(setUsersAC(data.items));
+        dispatch(setNumberOfUsersAC(data.totalCount));
+    }
+}
+
+// Вынесли дублирующую часть кода в отдельную функцию
+const followUnfollow = async (userId, dispatch, apiMethod, actionCreator) => {
+    dispatch(toggleFollowButton(true, userId));
+    let data = await apiMethod(userId)
+    dispatch(toggleFollowButton(false, userId));
+    if (data.resultCode === 0) {
+        dispatch(actionCreator(userId));
     }
 }
 
 // ThunkCreator для unfollow
 export const unfollow = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleFollowButton(true, userId));
-        userApi.unSubscribe(userId)
-            .then((data) => {
-                dispatch(toggleFollowButton(false, userId));
-                if (data.resultCode === 0) {
-                    dispatch(unfollowAC(userId));
-                }
-            });
+    return async (dispatch) => {
+        await followUnfollow(userId, dispatch, userApi.unSubscribe.bind(userApi), unfollowAC)
     }
 }
 
 // ThunkCreator для follow
 export const follow = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleFollowButton(true, userId));
-        userApi.subscribe(userId)
-            .then((data) => {
-                dispatch(toggleFollowButton(false, userId));
-                if (data.resultCode === 0) {
-                    dispatch(followAC(userId));
-                }
-            });
+    return async (dispatch) => {
+        await followUnfollow(userId, dispatch, userApi.subscribe.bind(userApi), followAC)
     }
 }
 

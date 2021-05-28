@@ -19,12 +19,14 @@ import {
 class UsersContainer extends React.Component {
     // Метод componentDidMount вызывается только 1 раз после отрисовки компоненты
     componentDidMount() {
-        this.props.getUsersThunkCreator(this.props.currentPage, this.props.pageSize);
+        const {currentPage, pageSize} = this.props;
+        this.props.getUsersThunkCreator(currentPage, pageSize);
     }
 
     goToPage = (page) => {
         this.props.setPageNumber(page);
-        this.props.getUsersThunkCreator(page, this.props.pageSize);
+        const {pageSize} = this.props;
+        this.props.getUsersThunkCreator(page, pageSize);
     }
 
     render() {
