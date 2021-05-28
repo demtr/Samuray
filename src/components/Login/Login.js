@@ -6,14 +6,14 @@ import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
 import style from "./Login.module.css"
 
-const LoginForm = (props) => {
-    return <form onSubmit={props.handleSubmit}>
+const LoginForm = ({handleSubmit, error}) => {
+    return <form onSubmit={handleSubmit}>
         <div><Field type="text" name="email" component={Input}
                     validate={[required]} placeholder="login"/></div>
         <div><Field type="password" name="password" component={Input}
                     validate={[required]} placeholder="password"/></div>
         <div><Field type="checkbox" name="rememberMe" component={Input}/>запомнить</div>
-        {props.error && <div className={style.errDiv}><span className={style.error}>{props.error}</span></div>}
+        {error && <div className={style.errDiv}><span className={style.error}>{error}</span></div>}
         <div>
             <button>Login</button>
         </div>

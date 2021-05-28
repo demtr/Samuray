@@ -21,10 +21,6 @@ export const userApi = {
     unSubscribe(userId) {
         return DAL.delete(`follow/${userId}`)
             .then(response => response.data)
-    },
-    setProfile(userId) {
-        console.warn("Obsolete method!. Move to profileApi.")
-        return profileApi.getProfile(userId);
     }
 };
 

@@ -60,31 +60,25 @@ const profileBlockReducer = (state = initialState, action) => {
 }
 
 export const addPostActionCreator = (msg) => ({type: ADD_POST, msg});
-export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
-export const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
+const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
+const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
 export const deletePostActionCreator = (id) => ({type: DELETE_POST, id});
 
-export const getUserProfileThunkCreator = (userId) => (dispatch) => {
-    return profileApi.getProfile(userId)
-        .then((data) => {
-            dispatch(setUserProfile(data));
-        });
+export const getUserProfileThunkCreator = (userId) => async (dispatch) => {
+    let data = await profileApi.getProfile(userId);
+    dispatch(setUserProfile(data));
 }
 
-export const getUserStatusThunkCreator = (userId) => (dispatch) => {
-    return profileApi.getStatus(userId)
-        .then((data) => {
-            dispatch(setUserStatus(data));
-        });
+export const getUserStatusThunkCreator = (userId) => async (dispatch) => {
+    let data = await profileApi.getStatus(userId)
+    dispatch(setUserStatus(data));
 }
 
-export const updateUserStatusThunkCreator = (status) => (dispatch) => {
-    return profileApi.updateStatus(status)
-        .then((data) => {
-            if (data.data.resultCode === 0) {
-                dispatch(setUserStatus(status));
-            }
-        });
+export const updateUserStatusThunkCreator = (status) => async (dispatch) => {
+    let data = await profileApi.updateStatus(status)
+    if (data.data.resultCode === 0) {
+        dispatch(setUserStatus(status));
+    }
 }
 
 export default profileBlockReducer;

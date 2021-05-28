@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import profileBlockReducer from "./profileBlockReducer";
 import dialogBlockReducer from "./dialogBlockReducer";
 import sideBarReducer from "./sideBarReducer";
@@ -18,6 +18,9 @@ let reducers = combineReducers({
     app: appReducer
 })
 
-let store = createStore(reducers, applyMiddleware(thunkMiddleware));
+// для активации браузерного расширения Redux DevTools
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+let store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleware)));
 window.store = store
 export default store;
