@@ -2,11 +2,16 @@
     font-weight: bold;
     font-size: large;
     color: red;
+    background-color: aliceblue;
 }
 
 .pageLink {
     font-size: x-small;
     cursor: pointer;
+    background-color: darkkhaki;
+    border: solid 1px red;
+    padding: 0 1px;
+    margin: 0 1px;
 }
 
 .jump {
