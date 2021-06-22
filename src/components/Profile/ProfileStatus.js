@@ -36,7 +36,7 @@ class ProfileStatus extends Component {
         return <div>
             <div className={c.status}>Статус:</div>
             {!this.state.editStatus &&
-                <div onDoubleClick={this.setEditModeOn}>{this.props.status || "нет"}</div>}
+                <span onDoubleClick={this.setEditModeOn}>{this.props.status || "нет"}</span>}
             {this.state.editStatus &&
                 <div><input onBlur={this.setEditModeOff}
                             autoFocus={true} size="50"
