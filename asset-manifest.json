@@ -1,31 +1,31 @@
 {
   "files": {
     "main.css": "/Samuray/static/css/main.16436b44.chunk.css",
-    "main.js": "/Samuray/static/js/main.91eaccc0.chunk.js",
-    "main.js.map": "/Samuray/static/js/main.91eaccc0.chunk.js.map",
-    "runtime-main.js": "/Samuray/static/js/runtime-main.8676b243.js",
-    "runtime-main.js.map": "/Samuray/static/js/runtime-main.8676b243.js.map",
-    "static/js/2.6bfa2c4f.chunk.js": "/Samuray/static/js/2.6bfa2c4f.chunk.js",
-    "static/js/2.6bfa2c4f.chunk.js.map": "/Samuray/static/js/2.6bfa2c4f.chunk.js.map",
+    "main.js": "/Samuray/static/js/main.4fb182be.chunk.js",
+    "main.js.map": "/Samuray/static/js/main.4fb182be.chunk.js.map",
+    "runtime-main.js": "/Samuray/static/js/runtime-main.61cd999b.js",
+    "runtime-main.js.map": "/Samuray/static/js/runtime-main.61cd999b.js.map",
+    "static/js/2.3b2b9778.chunk.js": "/Samuray/static/js/2.3b2b9778.chunk.js",
+    "static/js/2.3b2b9778.chunk.js.map": "/Samuray/static/js/2.3b2b9778.chunk.js.map",
     "static/css/3.fdc1bd8e.chunk.css": "/Samuray/static/css/3.fdc1bd8e.chunk.css",
     "static/js/3.fe94d5ac.chunk.js": "/Samuray/static/js/3.fe94d5ac.chunk.js",
     "static/js/3.fe94d5ac.chunk.js.map": "/Samuray/static/js/3.fe94d5ac.chunk.js.map",
     "static/css/4.fc11c4fc.chunk.css": "/Samuray/static/css/4.fc11c4fc.chunk.css",
-    "static/js/4.f73c9cbd.chunk.js": "/Samuray/static/js/4.f73c9cbd.chunk.js",
-    "static/js/4.f73c9cbd.chunk.js.map": "/Samuray/static/js/4.f73c9cbd.chunk.js.map",
+    "static/js/4.d6cf4cfd.chunk.js": "/Samuray/static/js/4.d6cf4cfd.chunk.js",
+    "static/js/4.d6cf4cfd.chunk.js.map": "/Samuray/static/js/4.d6cf4cfd.chunk.js.map",
     "index.html": "/Samuray/index.html",
     "static/css/3.fdc1bd8e.chunk.css.map": "/Samuray/static/css/3.fdc1bd8e.chunk.css.map",
     "static/css/4.fc11c4fc.chunk.css.map": "/Samuray/static/css/4.fc11c4fc.chunk.css.map",
     "static/css/main.16436b44.chunk.css.map": "/Samuray/static/css/main.16436b44.chunk.css.map",
-    "static/js/2.6bfa2c4f.chunk.js.LICENSE.txt": "/Samuray/static/js/2.6bfa2c4f.chunk.js.LICENSE.txt",
+    "static/js/2.3b2b9778.chunk.js.LICENSE.txt": "/Samuray/static/js/2.3b2b9778.chunk.js.LICENSE.txt",
     "static/media/landscape.88de7fd0.webp": "/Samuray/static/media/landscape.88de7fd0.webp",
     "static/media/like.dab55641.jfif": "/Samuray/static/media/like.dab55641.jfif",
     "static/media/preloader.8cf2a2c3.gif": "/Samuray/static/media/preloader.8cf2a2c3.gif"
   },
   "entrypoints": [
-    "static/js/runtime-main.8676b243.js",
-    "static/js/2.6bfa2c4f.chunk.js",
+    "static/js/runtime-main.61cd999b.js",
+    "static/js/2.3b2b9778.chunk.js",
     "static/css/main.16436b44.chunk.css",
-    "static/js/main.91eaccc0.chunk.js"
+    "static/js/main.4fb182be.chunk.js"
   ]
 }
