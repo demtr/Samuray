@@ -6,7 +6,9 @@ const Profile = (props) => {
         <div>
             <ProfileInfo profile={props.profile} status={props.status}
                          updateStatus={props.updateUserStatus}
-                         isMe={props.profile?.userId === props.myUserId}/>
+                         isMe={props.profile?.userId === props.myUserId}
+                         savePhoto={props.savePhoto}
+            />
             <MyPostsContainer />
         </div>
     );

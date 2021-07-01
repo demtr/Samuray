@@ -36,6 +36,15 @@ export const profileApi = {
     updateStatus(status) {
         return DAL.put(`profile/status/`,{status});
     },
+    updatePhotos(fileWithPhoto) {
+        const formData = new FormData();
+        formData.append("image", fileWithPhoto);
+        return DAL.put(`profile/photo`, formData, {
+            headers:{
+                "Content-Type": "multipart/form-data"
+            }
+        });
+    },
 }
 
 export const authApi = {
