@@ -1,9 +1,10 @@
 import {profileApi} from "../api/api";
 
-const ADD_POST = "ADD-POST";
+const ADD_POST = "ADD_POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_USER_STATUS = "SET_USER_STATUS";
 const DELETE_POST = "DELETE_POST";
+const SET_NEW_PHOTO = "SET_NEW_PHOTO";
 
 let initialState = {
     anyPosts: [
@@ -51,7 +52,10 @@ const profileBlockReducer = (state = initialState, action) => {
             return {...state, status: action.status};
 
         case DELETE_POST:
-            return {...state, anyPosts: state.anyPosts.filter(p=>p.id!=action.id)};
+            return {...state, anyPosts: state.anyPosts.filter(p=>p.id !=action.id)};
+
+        case SET_NEW_PHOTO:
+            return {...state, profile: {...state.profile, photos: action.photos }};
 
         default:
             break;
@@ -63,6 +67,7 @@ export const addPostActionCreator = (msg) => ({type: ADD_POST, msg});
 const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
 export const deletePostActionCreator = (id) => ({type: DELETE_POST, id});
+const setNewPhotos = (photos) => ({type: SET_NEW_PHOTO, photos});
 
 export const getUserProfileThunkCreator = (userId) => async (dispatch) => {
     let data = await profileApi.getProfile(userId);
@@ -78,6 +83,13 @@ export const updateUserStatusThunkCreator = (status) => async (dispatch) => {
     let data = await profileApi.updateStatus(status)
     if (data.data.resultCode === 0) {
         dispatch(setUserStatus(status));
+    }
+}
+
+export const updatePhotoThunkCreator = (file) => async (dispatch) => {
+    let response = await profileApi.updatePhotos(file);
+    if (response.data.resultCode === 0) {
+        dispatch(setNewPhotos(response.data.data.photos));
     }
 }
 
