@@ -45,6 +45,9 @@ export const profileApi = {
             }
         });
     },
+    saveProfile(profile) {
+        return DAL.put(`profile`, profile);
+    },
 }
 
 export const authApi = {

@@ -8,6 +8,9 @@ const Profile = (props) => {
                          updateStatus={props.updateUserStatus}
                          isMe={props.profile?.userId === props.myUserId}
                          savePhoto={props.savePhoto}
+                         saveProfile={props.saveProfile}
+                         editMode={props.editMode}
+                         setEditMode={props.setEditProfile}
             />
             <MyPostsContainer />
         </div>

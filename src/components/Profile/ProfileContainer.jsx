@@ -2,10 +2,9 @@ import React from "react";
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {
-    getUserProfileThunkCreator,
-    getUserStatusThunkCreator,
-    updatePhotoThunkCreator,
-    updateUserStatusThunkCreator
+    getUserProfileThunkCreator, getUserStatusThunkCreator,
+    saveProfileThunkCreator, setEditProfile,
+    updatePhotoThunkCreator, updateUserStatusThunkCreator
 } from "../../redux/profileBlockReducer";
 import {withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
@@ -37,6 +36,7 @@ class ProfileContainer extends React.Component {
 
 const mapStateToProps = (state) => ({
     profile: state.profileBlock.profile,
+    editMode: state.profileBlock.profileEdit,
     status: state.profileBlock.status,
     myUserId: state.auth.userId
 });
@@ -53,6 +53,12 @@ const mapDispatchToProps = (dispatch) => ({
     },
     savePhoto: (photo) => {
         dispatch(updatePhotoThunkCreator(photo))
+    },
+    saveProfile: (profile) => {
+        dispatch(saveProfileThunkCreator(profile))
+    },
+    setEditProfile: (mode) => {
+        dispatch(setEditProfile(mode))
     }
 });
 

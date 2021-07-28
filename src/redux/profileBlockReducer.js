@@ -1,10 +1,12 @@
 import {profileApi} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const ADD_POST = "ADD_POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
 const SET_USER_STATUS = "SET_USER_STATUS";
 const DELETE_POST = "DELETE_POST";
 const SET_NEW_PHOTO = "SET_NEW_PHOTO";
+const EDIT_PROFILE = "EDIT_PROFILE";
 
 let initialState = {
     anyPosts: [
@@ -13,6 +15,7 @@ let initialState = {
         {id: 3, message: "It works correct!", lcount: 19},
     ],
     profile: null,
+    profileEdit: null,
     status: ""
 };
 
@@ -52,10 +55,13 @@ const profileBlockReducer = (state = initialState, action) => {
             return {...state, status: action.status};
 
         case DELETE_POST:
-            return {...state, anyPosts: state.anyPosts.filter(p=>p.id !=action.id)};
+            return {...state, anyPosts: state.anyPosts.filter(p => p.id !== action.id)};
 
         case SET_NEW_PHOTO:
-            return {...state, profile: {...state.profile, photos: action.photos }};
+            return {...state, profile: {...state.profile, photos: action.photos}};
+
+        case EDIT_PROFILE:
+            return {...state, profileEdit: action.edit};
 
         default:
             break;
@@ -68,6 +74,7 @@ const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 const setUserStatus = (status) => ({type: SET_USER_STATUS, status});
 export const deletePostActionCreator = (id) => ({type: DELETE_POST, id});
 const setNewPhotos = (photos) => ({type: SET_NEW_PHOTO, photos});
+export const setEditProfile = (edit) => ({type: EDIT_PROFILE, edit});
 
 export const getUserProfileThunkCreator = (userId) => async (dispatch) => {
     let data = await profileApi.getProfile(userId);
@@ -90,6 +97,32 @@ export const updatePhotoThunkCreator = (file) => async (dispatch) => {
     let response = await profileApi.updatePhotos(file);
     if (response.data.resultCode === 0) {
         dispatch(setNewPhotos(response.data.data.photos));
+    }
+}
+
+export const saveProfileThunkCreator = (profile) => async (dispatch, getState) => {
+    const userId = getState().auth.userId;
+    const response = await profileApi.saveProfile(profile);
+    if (response.data.resultCode === 0) {
+        dispatch(getUserProfileThunkCreator(userId));
+        dispatch(setEditProfile(false))
+    } else {
+        // processing server error messages
+        const errMsg = response.data.messages;
+        const contKey = "Contacts->";
+        const errObj = {};
+        errMsg.forEach(err => {
+            const errPos = err.indexOf(contKey);
+
+            if (~errPos) {
+                const errField = err[errPos + contKey.length].toLowerCase() +
+                    err.slice(errPos + contKey.length + 1, -1);
+                errObj["contacts"] = {...errObj["contacts"], [errField]: err};
+            } else {
+                errObj["_error"] = err;
+            }
+        });
+        dispatch(stopSubmit('profile-data', errObj))
     }
 }
 

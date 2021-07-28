@@ -13,3 +13,15 @@
 i {
     color: darkblue;
 }
+
+.contacts {
+    margin-left: 12px;
+}
+
+.head {
+    color: blue;
+}
+
+.contactsHead {
+    margin-bottom: -16px;
+}
