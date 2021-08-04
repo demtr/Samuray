@@ -15,6 +15,8 @@ const ProfileInfo = ({profile, status, isMe, updateStatus, savePhoto, saveProfil
         saveProfile(formData);
     }
 
+    if (!isMe) setEditMode(false);
+
     return <>
         {isMe && <img src={land} alt="Profile wallpaper" className={c.land}/>}
         {editMode
