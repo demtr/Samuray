@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import {Redirect} from "react-router-dom";
 import style from "./Login.module.css"
 
-const LoginForm = ({handleSubmit, error}) => {
+const LoginForm = ({handleSubmit, error, captchaUrl}) => {
     return <form onSubmit={handleSubmit}>
         <div><Field type="text" name="email" component={Input}
                     validate={[required]} placeholder="login"/></div>
@@ -14,6 +14,11 @@ const LoginForm = ({handleSubmit, error}) => {
                     validate={[required]} placeholder="password"/></div>
         <div><Field type="checkbox" name="rememberMe" component={Input}/>запомнить</div>
         {error && <div className={style.errDiv}><span className={style.error}>{error}</span></div>}
+        {captchaUrl && <div><img src={captchaUrl}/>
+            <div><Field type="text" name="captcha" component={Input}
+                        validate={[required]} placeholder="captcha"/>
+            </div>
+        </div>}
         <div>
             <button>Login</button>
         </div>
@@ -29,14 +34,15 @@ const Login = (props) => {
         props.loginUserThunkCreator(formData);
     };
 
-    if (props.isAuth) return <Redirect to="/" />
+    if (props.isAuth) return <Redirect to="/"/>
 
     return <div><h2>Login</h2>
-        <ReduxFormLogin onSubmit={mySubmit}/></div>
+        <ReduxFormLogin onSubmit={mySubmit} captchaUrl={props.captchaUrl}/></div>
 };
 
 const mapStateToProps = state => ({
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    captchaUrl: state.auth.captchaUrl
 });
 
 export default connect(mapStateToProps, {loginUserThunkCreator})(Login);

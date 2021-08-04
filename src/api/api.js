@@ -64,3 +64,9 @@ export const authApi = {
             .then(response => response.data);
     }
 }
+export const securityApi = {
+    getCaptchaUrl() {
+        return DAL.get(`security/get-captcha-url`)
+            .then(response => response.data);
+    }
+}
